@@ -5,72 +5,80 @@ import Layout from '../components/Layout.astro';
 <Layout title="Hire Talent" currentPage="hire-talent">
     <div class="container grid-2">
         <!-- First Collaboration Process -->
-        <div class="card card-tall">
-            <h3 class="title">First collaboration:</h3>
-            <ol class="list-numbered">
-                <li>We speak about your needs.</li>
-                <li>We search, qualify and select your candidates.</li>
-                <li>You receive our overview, CV and salary expectation of candidates who confirmed they want to interview for your position.</li>
-                <li>We coordinate your interview processes.</li>
-                <li>You decide whom you want to hire.</li>
-                <li>You'll receive an invoice after your position is closed. Only then.</li>
-            </ol>
+        <div class="card card-tall" style="view-transition-name: card-1;">
+            <div style="view-transition-name: card-content;">
+                <h3 class="title">First collaboration:</h3>
+                <ol class="list-numbered">
+                    <li>We speak about your needs.</li>
+                    <li>We search, qualify and select your candidates.</li>
+                    <li>You receive our overview, CV and salary expectation of candidates who confirmed they want to interview for your position.</li>
+                    <li>We coordinate your interview processes.</li>
+                    <li>You decide whom you want to hire.</li>
+                    <li>You'll receive an invoice after your position is closed. Only then.</li>
+                </ol>
+            </div>
         </div>
 
         <!-- Future Collaboration Process -->
-        <div class="card card-tall">
-            <h3 class="title">If you ever hire again:</h3>
-            <ol class="list-numbered">
-                <li>You let us know.</li>
-                <li>Your dedicated consultant will revisit all information we stored about your needs, your company and our previous processes.</li>
-                <li>We immediately contact our network to see who at this point wants to have an interview with you.</li>
-                <li>You hire your favorite candidate.</li>
-            </ol>
+        <div class="card card-tall" style="view-transition-name: card-2;">
+            <div style="view-transition-name: card-content;">
+                <h3 class="title">If you ever hire again:</h3>
+                <ol class="list-numbered">
+                    <li>You let us know.</li>
+                    <li>Your dedicated consultant will revisit all information we stored about your needs, your company and our previous processes.</li>
+                    <li>We immediately contact our network to see who at this point wants to have an interview with you.</li>
+                    <li>You hire your favorite candidate.</li>
+                </ol>
+            </div>
         </div>
 
         <!-- Conditions Card -->
-        <div class="card card-tall">
-            <h3 class="title">Conditions:</h3>
-            <div class="body-text flex-1">
-                <ul class="list-bulleted">
-                    <li>The fee of the placement is an agreed percentage of your candidate's salary.</li>
-                    <li><strong>That means:</strong> If you're not fully satisfied with any of the candidates you've interviewed and you don't decide to hire, our service is 100% free and without risk for you.</li>
-                </ul>
-                <br>
-                That's why we selectively choose our partners. Unfortunately, we cannot work with every company.
-                Let's find out if our collaboration makes sense.
-            </div>
-            <div class="btn-group">
-                <a href="#callback" class="btn btn-flex">Receive a call back</a>
-                <span class="divider">or</span>
-                <a href="#schedule" class="btn btn-flex">Schedule your meeting</a>
+        <div class="card card-tall" style="view-transition-name: card-3;">
+            <div style="view-transition-name: card-content;">
+                <h3 class="title">Conditions:</h3>
+                <div class="body-text flex-1">
+                    <ul class="list-bulleted">
+                        <li>The fee of the placement is an agreed percentage of your candidate's salary.</li>
+                        <li><strong>That means:</strong> If you're not fully satisfied with any of the candidates you've interviewed and you don't decide to hire, our service is 100% free and without risk for you.</li>
+                    </ul>
+                    <br>
+                    That's why we selectively choose our partners. Unfortunately, we cannot work with every company.
+                    Let's find out if our collaboration makes sense.
+                </div>
+                <div class="btn-group">
+                    <a href="#callback" class="btn btn-flex">Receive a call back</a>
+                    <span class="divider">or</span>
+                    <a href="#schedule" class="btn btn-flex">Schedule your meeting</a>
+                </div>
             </div>
         </div>
 
         <!-- About Us Card -->
-        <div class="card card-tall">
-            <h3 class="title">About Us</h3>
-            <div class="profile">
-                <img src="/assets/Profile Picture without Background.png" alt="Vincent Lüders">
-                <div class="profile-info">
-                    <h4 class="profile-name">Vincent Lüders</h4>
-                    <p class="profile-title">Founder & IT Headhunter</p>
+        <div class="card card-tall" style="view-transition-name: card-4;">
+            <div style="view-transition-name: card-content;">
+                <h3 class="title">About Us</h3>
+                <div class="profile">
+                    <img src="/assets/Profile Picture without Background.png" alt="Vincent Lüders">
+                    <div class="profile-info">
+                        <h4 class="profile-name">Vincent Lüders</h4>
+                        <p class="profile-title">Founder & IT Headhunter</p>
+                    </div>
                 </div>
-            </div>
-            <p class="quote">"After seeing how not to treat clients, I decided to open my own company."</p>
-            <div class="flex-1">
-                <div class="body-text">
-                    <strong>Your time is valued:</strong>
-                    <ul class="list-bulleted">
-                        <li>We gather necessary information before communicating with you to make our interactions as efficient as possible.</li>
-                        <li>We prefer concise communication without overcomplication.</li>
-                    </ul>
-                </div>
-                <div class="body-text">
-                    <strong>Your culture is respected:</strong>
-                    <ul class="list-bulleted">
-                        <li>We speak your language: English, German, French, Portuguese, and Spanish.</li>
-                    </ul>
+                <p class="quote">"After seeing how not to treat clients, I decided to open my own company."</p>
+                <div class="flex-1">
+                    <div class="body-text">
+                        <strong>Your time is valued:</strong>
+                        <ul class="list-bulleted">
+                            <li>We gather necessary information before communicating with you to make our interactions as efficient as possible.</li>
+                            <li>We prefer concise communication without overcomplication.</li>
+                        </ul>
+                    </div>
+                    <div class="body-text">
+                        <strong>Your culture is respected:</strong>
+                        <ul class="list-bulleted">
+                            <li>We speak your language: English, German, French, Portuguese, and Spanish.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
