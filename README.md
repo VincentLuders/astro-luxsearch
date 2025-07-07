@@ -131,6 +131,12 @@ import Layout from '../components/Layout.astro';
 - **Use established typography hierarchy** (`.title`, `.body-text`)
 - **Keep responsive grid patterns** (`.grid-2`, `.container`)
 
+### View Transitions (No Flash Navigation)
+- **Native browser support**: Uses modern `@view-transition` CSS rule
+- **Zero JavaScript**: No custom router needed - browser handles transitions
+- **Smooth transitions**: Background and logo persist without flashing
+- **Fallback support**: Gracefully works in browsers without view transition support
+
 ## 🔧 Development Workflow
 
 ### Local Development

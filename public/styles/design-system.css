@@ -130,6 +130,7 @@ body {
     height: 100%;
     z-index: -2;
     overflow: hidden;
+    view-transition-name: gradient-background;
 }
 
 .gradient-blob {
@@ -483,6 +484,10 @@ body {
     display: flex;
     align-items: flex-end;
     gap: 1.5rem;
+}
+
+.logo {
+    view-transition-name: site-logo;
 }
 
 .logo img {
