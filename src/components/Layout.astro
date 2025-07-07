@@ -1,0 +1,30 @@
+---
+import Header from './Header.astro';
+import GradientBackground from './GradientBackground.astro';
+
+export interface Props {
+    title: string;
+    currentPage?: 'about' | 'opportunities' | 'hire-talent';
+}
+
+const { title, currentPage } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} - luxsearch</title>
+    <link rel="stylesheet" href="/styles/design-system.css">
+</head>
+<body>
+    <GradientBackground />
+    <Header currentPage={currentPage} />
+    
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <slot />
+    </main>
+</body>
+</html> 

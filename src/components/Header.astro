@@ -1,0 +1,25 @@
+---
+export interface Props {
+    currentPage?: 'about' | 'opportunities' | 'hire-talent';
+}
+
+const { currentPage } = Astro.props;
+---
+
+<!-- Header -->
+<header class="header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="/assets/logo.png" alt="luxsearch logo">
+        </div>
+        <div class="brand">
+            <span class="brand-name">luxsearch®</span>
+            <span class="brand-tagline">lux is searching you.</span>
+        </div>
+    </div>
+    <nav class="nav">
+        <a href="/about" class={`nav-link ${currentPage === 'about' ? 'current' : ''}`}>About Us</a>
+        <a href="/opportunities" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
+        <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
+    </nav>
+</header> 
