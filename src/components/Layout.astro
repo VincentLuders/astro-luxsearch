@@ -71,6 +71,9 @@ const { title, currentPage } = Astro.props;
                         currentContent.innerHTML = newContent.innerHTML;
                     }
                     
+                    // Reset scroll position to top immediately
+                    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                    
                     // Update title
                     const newTitle = newDoc.querySelector('title');
                     if (newTitle) {
