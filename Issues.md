@@ -11,3 +11,5 @@ Please read the read me first and then lookup astro documentation on why our imp
 
 - The animation on the when hovering over the job-tag is instant. I don't know why.f
 
+- No matter what, I can't change the color from the profile-name
+ to the gradient
