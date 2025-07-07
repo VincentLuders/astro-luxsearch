@@ -45,7 +45,24 @@ const { title, currentPage } = Astro.props;
                     // Use View Transition API if available
                     if ('startViewTransition' in document) {
                         document.startViewTransition(async () => {
-                            await loadPage(href);
+                            // Reduce flash by preloading content first
+                            const response = await fetch(href);
+                            const html = await response.text();
+                            const parser = new DOMParser();
+                            const newDoc = parser.parseFromString(html, 'text/html');
+                            
+                            // Quick content swap
+                            const newContent = newDoc.querySelector('.main-content');
+                            const currentContent = document.querySelector('.main-content');
+                            if (newContent && currentContent) {
+                                currentContent.innerHTML = newContent.innerHTML;
+                            }
+                            
+                            // Reset scroll and update
+                            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                            const newTitle = newDoc.querySelector('title');
+                            if (newTitle) document.title = newTitle.textContent;
+                            history.pushState({}, '', href);
                         });
                     } else {
                         // Smooth fallback
