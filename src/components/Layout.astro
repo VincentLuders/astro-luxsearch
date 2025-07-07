@@ -17,8 +17,7 @@ const { title, currentPage } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - luxsearch</title>
     <link rel="stylesheet" href="/styles/design-system.css">
-    
-    <!-- View Transitions enabled via CSS -->
+    <meta name="view-transition" content="same-origin" />
 </head>
 <body>
     <GradientBackground />
@@ -28,5 +27,90 @@ const { title, currentPage } = Astro.props;
     <main class="main-content">
         <slot />
     </main>
+
+    <script>
+        // Enhanced SPA navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    
+                    // Immediate visual feedback
+                    navLinks.forEach(l => l.classList.remove('current'));
+                    link.classList.add('current');
+                    
+                    // Use View Transition API if available
+                    if ('startViewTransition' in document) {
+                        document.startViewTransition(async () => {
+                            // Reduce flash by preloading content first
+                            const response = await fetch(href);
+                            const html = await response.text();
+                            const parser = new DOMParser();
+                            const newDoc = parser.parseFromString(html, 'text/html');
+                            
+                            // Quick content swap
+                            const newContent = newDoc.querySelector('.main-content');
+                            const currentContent = document.querySelector('.main-content');
+                            if (newContent && currentContent) {
+                                currentContent.innerHTML = newContent.innerHTML;
+                            }
+                            
+                            // Reset scroll and update
+                            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                            const newTitle = newDoc.querySelector('title');
+                            if (newTitle) document.title = newTitle.textContent;
+                            history.pushState({}, '', href);
+                        });
+                    } else {
+                        // Smooth fallback
+                        const mainContent = document.querySelector('.main-content');
+                        mainContent.style.opacity = '0.5';
+                        await loadPage(href);
+                        mainContent.style.opacity = '1';
+                    }
+                });
+            });
+
+            async function loadPage(url) {
+                try {
+                    const response = await fetch(url);
+                    const html = await response.text();
+                    const parser = new DOMParser();
+                    const newDoc = parser.parseFromString(html, 'text/html');
+                    
+                    // Update content
+                    const newContent = newDoc.querySelector('.main-content');
+                    const currentContent = document.querySelector('.main-content');
+                    if (newContent && currentContent) {
+                        currentContent.innerHTML = newContent.innerHTML;
+                    }
+                    
+                    // Reset scroll position to top immediately
+                    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                    
+                    // Update title
+                    const newTitle = newDoc.querySelector('title');
+                    if (newTitle) {
+                        document.title = newTitle.textContent;
+                    }
+                    
+                    // Update URL
+                    history.pushState({}, '', url);
+                    
+                } catch (error) {
+                    console.error('Navigation error:', error);
+                    window.location.href = url;
+                }
+            }
+        });
+
+        // Handle browser navigation
+        window.addEventListener('popstate', () => {
+            location.reload();
+        });
+    </script>
 </body>
 </html> 
