@@ -1,6 +1,6 @@
 ---
 export interface Props {
-    currentPage?: 'about' | 'opportunities' | 'hire-talent';
+    currentPage?: 'opportunities' | 'hire-talent';
 }
 
 const { currentPage } = Astro.props;
@@ -18,7 +18,6 @@ const { currentPage } = Astro.props;
         </div>
     </div>
     <nav class="nav">
-        <a href="/about" class={`nav-link ${currentPage === 'about' ? 'current' : ''}`}>About Us</a>
         <a href="/opportunities" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
         <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
     </nav>

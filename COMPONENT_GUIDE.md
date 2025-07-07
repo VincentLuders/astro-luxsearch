@@ -169,7 +169,7 @@ import Layout from '../components/Layout.astro';
 ```astro
 <!-- In Header.astro -->
 <nav class="nav">
-    <a href="/about" class={`nav-link ${currentPage === 'about' ? 'current' : ''}`}>About Us</a>
+    
     <a href="/opportunities" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
     <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
     <!-- Add new page here -->

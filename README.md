@@ -55,7 +55,7 @@ public/
 // Props interface defines what each page can customize
 export interface Props {
     title: string;                    // Page title for <title> tag
-    currentPage?: 'about' | 'opportunities' | 'hire-talent';  // For nav highlighting
+    currentPage?: 'opportunities' | 'hire-talent';  // For nav highlighting
 }
 ---
 ```
