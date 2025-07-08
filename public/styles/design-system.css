@@ -1406,7 +1406,7 @@ body.modal-open {
 }
 
 .checkbox-container input:checked ~ .checkmark {
-    background: var(--gradient-brand);
+    background: var(--color-text-black);
     border-color: transparent;
 }
 
@@ -1420,7 +1420,7 @@ body.modal-open {
 }
 
 .checkbox-container .small-text {
-    color: var(--color-text-secondary);
+    color: var(--color-text-black);
     margin: 0;
 }
 
