@@ -41,14 +41,24 @@ import Layout from '../components/Layout.astro';
                 Let's find out if our collaboration makes sense.
             </div>
             <div class="btn-group" style="margin-top: 20px; margin-bottom: 20px;">
-                <a href="#callback" class="btn-cta btn-cta-pulse">Receive a call back</a>
-                <a href="#schedule" class="btn-cta-secondary">Schedule your meeting</a>
+                <a href="#callback" class="btn btn-cta btn-cta-pulse btn-flex" style="height: 200px; min-height: 200px;">
+                    <span style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                        <span style="font-size: 2.5rem;">📞</span>
+                        <span>Receive a call back</span>
+                    </span>
+                </a>
+                <a href="#schedule" class="btn btn-cta btn-flex" style="height: 200px; min-height: 200px;">
+                    <span style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                        <span style="font-size: 2.5rem;">📅</span>
+                        <span>Schedule your meeting</span>
+                    </span>
+                </a>
             </div>
         </div>
 
         <!-- About Us Card -->
         <div class="card card-tall">
-            <h3 class="title">About Us</h3>
+            <h3 class="title">About Us:</h3>
             <div class="flex-1">
                 <div class="body-text">
                     <strong>Your time is valued:</strong>

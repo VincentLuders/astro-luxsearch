@@ -41,9 +41,6 @@ public/
 .card-medium       /* Medium card for job listings */
 .btn               /* Primary button style */
 .btn-flex          /* Flexible button in button groups */
-.btn-cta           /* Premium call-to-action button with gradient */
-.btn-cta-secondary /* Secondary CTA that transforms on hover */
-.btn-cta-pulse     /* Adds subtle pulse animation to CTA */
 .title             /* Section headings */
 .body-text         /* Standard paragraph text */
 .tag               /* Skill/technology tags */
@@ -165,10 +162,7 @@ git push             # Auto-deploys to luxsearch.eu
 | `.card-medium` | Job listings | Opportunities page |
 | `.title` | Section headings | H2, H3 elements |
 | `.body-text` | Paragraph text | Standard content |
-| `.btn` | Primary button | Standard buttons |
-| `.btn-cta` | Premium CTA button | High-priority actions (with gradient) |
-| `.btn-cta-secondary` | Secondary CTA | Alternative CTA (transforms on hover) |
-| `.btn-cta-pulse` | Animated CTA | Adds pulse animation for attention |
+| `.btn` | Primary button | Call-to-action buttons |
 | `.tag` | Technology tags | Skills, categories |
 | `.grid-2` | Two-column layout | Responsive containers |
 | `.container` | Page wrapper | Content max-width |

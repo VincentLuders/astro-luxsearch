@@ -13,3 +13,22 @@ Please read the read me first and then lookup astro documentation on why our imp
 
 - No matter what, I can't change the color from the profile-name
  to the gradient
+
+-  Job description Issue abrupt ending
+    Ok, nice it's not dark anymore.
+
+    But: The blurring looks kind of bad because it's not a transient blur—it's from one moment   
+    to the next. Right now, the job card enlarges and remains very transparent, and right after  
+    it reaches full size, the background becomes blurry.
+
+    Instead, it should become more and more blurry simultaneously as the expansion progresses.
+
+    Please think through why that might happen and find a reliable way to achieve what I   
+    described.
+
+    Please look at the possible code and rethink in general how we implemented it (if we did) 
+    because from the ground up it might not have worked out, and you must take another approach.
+
+    Again, look at our architecture described in @README.md.
+    And look up online @Web for the right documentation for our code and check if anything is 
+    different with Astro.

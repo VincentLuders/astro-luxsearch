@@ -3,9 +3,25 @@ import Layout from '../components/Layout.astro';
 ---
 
 <Layout title="Opportunities" currentPage="opportunities">
+    <!-- Job Modal Overlay -->
+    <div id="jobModal" class="job-modal-overlay">
+        <div class="job-modal-backdrop"></div>
+        <div class="job-modal-content">
+            <button class="job-modal-close" aria-label="Close job description">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <!-- Modal content will be populated by JavaScript -->
+            <div id="modalJobContent"></div>
+        </div>
+    </div>
+
     <div class="jobs-container grid-2">
-        <!-- Job Card 1 -->
-        <div class="card card-medium">
+        <!-- Job Card 1 - Full Stack AI Developer -->
+        <div class="card card-medium job-card" data-job-id="fullstack-ai-developer">
             <h3 class="title">Full Stack AI Developer</h3>
             <div class="tags">
                 <span class="tag">German</span>
@@ -16,7 +32,7 @@ import Layout from '../components/Layout.astro';
                 <span class="salary">80k - 90k EUR</span>
                 <span class="location">Luxembourg City</span>
             </div>
-            <button class="btn btn-full mt-auto">Apply</button>
+            <button class="btn btn-full mt-auto apply-btn">Apply</button>
         </div>
 
         <!-- Job Card 2 -->
@@ -184,4 +200,237 @@ import Layout from '../components/Layout.astro';
             <button class="btn btn-full mt-auto">Apply</button>
         </div>
     </div>
+
+    <!-- Job Description Data -->
+    <script type="application/json" id="jobDescriptions">
+    {
+        "fullstack-ai-developer": {
+            "title": "Full Stack AI Developer",
+            "tags": ["German", "AI", "TypeScript"],
+            "salary": "80k - 90k EUR",
+            "location": "Luxembourg City",
+            "description": {
+                "overview": "Join our innovative team as a Full Stack AI Developer where you'll build cutting-edge applications that integrate artificial intelligence seamlessly into user experiences. You'll work with the latest AI technologies while crafting beautiful, performant web applications.",
+                "responsibilities": [
+                    "Develop and maintain full-stack applications with AI integration",
+                    "Design and implement machine learning pipelines and APIs",
+                    "Collaborate with data scientists to integrate AI models into production",
+                    "Build responsive, accessible frontend interfaces using modern frameworks",
+                    "Optimize application performance and ensure scalability",
+                    "Participate in code reviews and maintain high code quality standards"
+                ],
+                "requirements": [
+                    "Fluency in German and English",
+                    "4+ years experience in full-stack development",
+                    "Strong proficiency in TypeScript and modern JavaScript",
+                    "Experience with AI/ML frameworks (TensorFlow, PyTorch, or similar)",
+                    "Knowledge of Node.js, React, and cloud platforms",
+                    "Understanding of REST APIs and database design"
+                ],
+                "benefits": [
+                    "Competitive salary: 80k - 90k EUR",
+                    "Flexible working hours and hybrid work options",
+                    "Latest MacBook Pro and development equipment",
+                    "Learning budget for conferences and courses",
+                    "Health insurance and wellness programs",
+                    "Team building events and company retreats"
+                ]
+            }
+        }
+    }
+    </script>
+
+    <script>
+        // Job modal functionality
+        const jobModal = document.getElementById('jobModal');
+        const modalContent = document.getElementById('modalJobContent');
+        const closeBtn = document.querySelector('.job-modal-close');
+        const backdrop = document.querySelector('.job-modal-backdrop');
+        const jobDescriptions = JSON.parse(document.getElementById('jobDescriptions').textContent);
+
+        // Add click listeners to job cards
+        document.querySelectorAll('.job-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Don't open modal if apply button was clicked
+                if (e.target.closest('.apply-btn')) {
+                    return;
+                }
+                
+                const jobId = card.dataset.jobId;
+                if (jobDescriptions[jobId]) {
+                    openJobModal(jobDescriptions[jobId]);
+                }
+            });
+        });
+
+        // Close modal events
+        closeBtn.addEventListener('click', closeJobModal);
+        backdrop.addEventListener('click', closeJobModal);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && jobModal.classList.contains('active')) {
+                closeJobModal();
+            }
+        });
+
+        function openJobModal(jobData) {
+            // Create modal content
+            modalContent.innerHTML = createModalContent(jobData);
+            
+            // Add modal functionality
+            addModalInteractivity();
+            
+            // Show modal with animation
+            document.body.classList.add('modal-open');
+            jobModal.classList.add('active');
+        }
+
+        function closeJobModal() {
+            jobModal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        function createModalContent(job) {
+            return `
+                <div class="job-modal-header">
+                    <h2 class="title">${job.title}</h2>
+                    <div class="tags">
+                        ${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="job-details">
+                        <span class="salary">${job.salary}</span>
+                        <span class="location">${job.location}</span>
+                    </div>
+                </div>
+
+                <div class="job-modal-body">
+                    <div class="job-section">
+                        <h3 class="subtitle">About this role</h3>
+                        <p class="body-text">${job.description.overview}</p>
+                    </div>
+
+                    <div class="job-section">
+                        <h3 class="subtitle">Key Responsibilities</h3>
+                        <ul class="list-bulleted">
+                            ${job.description.responsibilities.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="job-section">
+                        <h3 class="subtitle">Requirements</h3>
+                        <ul class="list-bulleted">
+                            ${job.description.requirements.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="job-section">
+                        <h3 class="subtitle">What we offer</h3>
+                        <ul class="list-bulleted">
+                            ${job.description.benefits.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job-modal-footer">
+                    <div class="application-form">
+                        <div class="file-upload-container">
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <div class="file-upload-content">
+                                    <svg class="file-upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7,10 12,15 17,10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    <h4>Drop your CV here or click to browse</h4>
+                                    <p class="small-text">PDF, DOC, DOCX (max 10MB)</p>
+                                </div>
+                                <input type="file" id="cvFile" accept=".pdf,.doc,.docx" hidden>
+                            </div>
+                            <div class="file-selected" id="fileSelected" style="display: none;">
+                                <span class="file-name" id="fileName"></span>
+                                <button type="button" class="file-remove" id="fileRemove">×</button>
+                            </div>
+                        </div>
+
+                        <div class="form-checkboxes">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="newsletterConsent">
+                                <span class="checkmark"></span>
+                                <span class="small-text">Send me job alerts and updates from luxsearch (unsubscribe anytime).</span>
+                            </label>
+                        </div>
+
+                        <button class="btn btn-submit" id="submitApplication" disabled>
+                            <span>Submit Application</span>
+                        </button>
+
+                        <p class="privacy-notice small-text">
+                            By submitting, you accept our <a href="#" class="privacy-link">Privacy Policy</a> and <a href="#" class="privacy-link">Terms of Use</a> and allow us to share your data with our partner companies.
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addModalInteractivity() {
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            const fileInput = document.getElementById('cvFile');
+            const fileSelected = document.getElementById('fileSelected');
+            const fileName = document.getElementById('fileName');
+            const fileRemove = document.getElementById('fileRemove');
+            const submitBtn = document.getElementById('submitApplication');
+
+            // File upload interactions
+            fileUploadArea.addEventListener('click', () => fileInput.click());
+            fileUploadArea.addEventListener('dragover', handleDragOver);
+            fileUploadArea.addEventListener('drop', handleDrop);
+            fileInput.addEventListener('change', handleFileSelect);
+            fileRemove.addEventListener('click', removeFile);
+
+            function handleDragOver(e) {
+                e.preventDefault();
+                fileUploadArea.classList.add('drag-over');
+            }
+
+            function handleDrop(e) {
+                e.preventDefault();
+                fileUploadArea.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect({ target: { files } });
+                }
+            }
+
+            function handleFileSelect(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    fileName.textContent = file.name;
+                    fileUploadArea.style.display = 'none';
+                    fileSelected.style.display = 'flex';
+                    updateSubmitButton();
+                }
+            }
+
+            function removeFile() {
+                fileInput.value = '';
+                fileUploadArea.style.display = 'flex';
+                fileSelected.style.display = 'none';
+                updateSubmitButton();
+            }
+
+            function updateSubmitButton() {
+                const hasFile = fileInput.files.length > 0;
+                submitBtn.disabled = !hasFile;
+                submitBtn.classList.toggle('btn-submit-active', hasFile);
+            }
+
+            // Submit form
+            submitBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (fileInput.files.length > 0) {
+                    alert('Application submitted successfully! We will be in touch soon.');
+                    closeJobModal();
+                }
+            });
+        }
+    </script>
 </Layout> 
