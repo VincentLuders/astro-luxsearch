@@ -193,6 +193,12 @@ const { title, currentPage } = Astro.props;
                 // Add modal functionality
                 addModalInteractivity();
                 
+                // Reset modal scroll position to top - prevents scroll position memory issue
+                const modalContainer = document.querySelector('.job-modal-content');
+                if (modalContainer) {
+                    modalContainer.scrollTop = 0;
+                }
+                
                 // Show modal with animation
                 document.body.classList.add('modal-open');
                 jobModal.classList.add('active');
