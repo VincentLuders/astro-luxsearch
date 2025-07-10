@@ -14,14 +14,10 @@ src/
 │   ├── Layout.astro        # Main page wrapper (header + content + footer)
 │   ├── Header.astro        # Navigation with smart current page highlighting
 │   └── GradientBackground.astro  # Animated background blobs
-├── data/                   # Data management
-│   └── jobs.js            # Centralized job data and helper functions
 ├── pages/                  # Route-based pages (file = URL)
 │   ├── index.astro         # Homepage (/)
 │   ├── hire-talent.astro   # Hire talent page (/hire-talent)
-│   ├── opportunities.astro # Jobs listing page (/opportunities)
-│   └── opportunities/      # Dynamic job detail pages
-│       └── [job].astro     # Individual job pages (/opportunities/job-id)
+│   └── opportunities.astro # Jobs page (/opportunities)
 public/
 ├── assets/                 # Static images & logos
 └── styles/
@@ -50,28 +46,6 @@ public/
 .tag               /* Skill/technology tags */
 .grid-2            /* Two-column responsive grid */
 ```
-
-## 📋 Job System Architecture
-
-### Dynamic Job URLs
-- **Job Listing**: `/opportunities` - Shows all available jobs
-- **Individual Jobs**: `/opportunities/[job-id]` - Shareable URLs for specific jobs
-- **Examples**: 
-  - `/opportunities/fullstack-ai-developer`
-  - `/opportunities/senior-devops-engineer`
-  - `/opportunities/data-science-lead`
-
-### Job Data Management
-- **Centralized Data**: All job information stored in `src/data/jobs.js`
-- **Unique IDs**: Each job has a URL-friendly identifier (kebab-case)
-- **Consistent Structure**: Title, tags, salary, location, description sections
-- **Helper Functions**: `getJobById()`, `getAllJobs()`, `getAllJobIds()`
-
-### URL Navigation
-- **Clickable Cards**: Job cards navigate to individual job pages
-- **Shareable Links**: Each job has a unique URL that can be shared
-- **Back Navigation**: Job detail pages include "Back to All Opportunities" link
-- **Browser History**: Proper browser back/forward support
 
 ## 🧩 Component Architecture
 
@@ -144,26 +118,6 @@ import Layout from '../components/Layout.astro';
 </Layout>
 ```
 3. **Add to Header.astro**: Add navigation link with proper currentPage logic
-
-### Adding New Jobs
-1. **Edit**: `src/data/jobs.js`
-2. **Add new job object** with unique kebab-case ID:
-```javascript
-"new-job-id": {
-    "title": "Job Title",
-    "tags": ["Skill1", "Skill2", "Skill3"],
-    "salary": "XX-XX EUR",
-    "location": "Luxembourg City",
-    "description": {
-        "overview": "Job overview...",
-        "responsibilities": ["...", "..."],
-        "requirements": ["...", "..."],
-        "benefits": ["...", "..."]
-    }
-}
-```
-3. **Automatic URL**: Job will be available at `/opportunities/new-job-id`
-4. **No rebuild needed**: Astro generates all job pages automatically
 
 ### Adding New Components
 1. **Create**: `src/components/NewComponent.astro`
