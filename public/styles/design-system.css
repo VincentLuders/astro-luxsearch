@@ -117,6 +117,9 @@ body {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: smooth;
+    /* Sticky Footer Layout */
+    display: flex;
+    flex-direction: column;
 }
 
 /* =================================================================
@@ -579,6 +582,7 @@ body {
    ================================================================= */
 
 .main-content {
+    flex: 1;
     margin-top: var(--header-height);
     padding: var(--spacing-xl) var(--spacing-md);
     transition: opacity 0.3s ease-in-out;
@@ -1734,7 +1738,7 @@ body.modal-open {
    ================================================================= */
 
 .footer {
-    margin-top: var(--spacing-xl);
+    /* margin-top: var(--spacing-xl); - removed for sticky footer layout */
     padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
     background: var(--glass-bg);
     border-top: 1px solid var(--glass-border);
