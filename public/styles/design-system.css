@@ -1294,7 +1294,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: auto;
-    padding-top: 10px;
+    margin-bottom: var(--spacing-md); /* Match quote margin-bottom for perfect alignment */
 }
 
 .btn-group .divider {
