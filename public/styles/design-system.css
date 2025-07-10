@@ -519,6 +519,8 @@ body {
     height: 6rem;
     width: auto;
     display: block;
+    /* Brand-consistent 3D shadow using established purple palette */
+    filter: drop-shadow(0 8px 24px rgba(31, 38, 135, 0.18)) drop-shadow(0 3px 8px rgba(46, 8, 235, 0.12));
 }
 
 .brand {
