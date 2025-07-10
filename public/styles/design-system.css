@@ -1767,7 +1767,6 @@ body.modal-open {
 
 .footer-link:hover {
     color: var(--color-text-primary);
-    text-decoration: underline;
 }
 
 .footer-divider {
