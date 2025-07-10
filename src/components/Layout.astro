@@ -17,6 +17,14 @@ const { title, currentPage } = Astro.props;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - luxsearch</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+    
     <link rel="stylesheet" href="/styles/design-system.css">
     <meta name="view-transition" content="same-origin" />
     <style>
@@ -63,7 +71,17 @@ const { title, currentPage } = Astro.props;
                     
                     // Immediate visual feedback
                     navLinks.forEach(l => l.classList.remove('current'));
-                    link.classList.add('current');
+                    
+                    // Special handling for logo click - highlight the corresponding nav link instead
+                    if (link.classList.contains('logo-link')) {
+                        // Find the matching nav link by href and add current class
+                        const matchingNavLink = document.querySelector(`.nav .nav-link[href="${href}"]`);
+                        if (matchingNavLink) {
+                            matchingNavLink.classList.add('current');
+                        }
+                    } else {
+                        link.classList.add('current');
+                    }
                     
                     // Use View Transition API if available
                     if ('startViewTransition' in document) {

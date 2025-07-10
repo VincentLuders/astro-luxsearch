@@ -1,6 +1,6 @@
-# LuxSearch Website - Astro Architecture Guide
+# Luxsearch Website - Astro Architecture Guide
 
-> 🚀 Modern component-based LuxSearch website built with Astro, deployed on luxsearch.eu
+> 🚀 Modern component-based Luxsearch website built with Astro, deployed on luxsearch.eu
 
 ## 🏗️ Architecture Overview
 

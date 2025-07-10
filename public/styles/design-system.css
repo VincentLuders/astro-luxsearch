@@ -489,6 +489,20 @@ body {
     gap: 1.5rem;
 }
 
+.logo-link {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-smooth);
+}
+
+.logo-link:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
+
 .logo img {
     height: 6rem;
     width: auto;
@@ -575,6 +589,11 @@ body {
 .nav:hover .nav-link:not(.current):hover::after {
     width: 100%;
     opacity: 1;
+}
+
+/* Exclude logo-link from showing purple underline */
+.logo-link.nav-link::after {
+    display: none;
 }
 
 /* =================================================================
