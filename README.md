@@ -2,6 +2,45 @@
 
 > 🚀 Modern component-based Luxsearch website built with Astro, deployed on luxsearch.eu
 
+## 🎯 **CORE ARCHITECTURE PRINCIPLE**
+
+### **"One Change Propagates Everywhere" - CSS Property-Level Reuse**
+
+This codebase follows a **unified CSS system** where shared behaviors (hover states, transitions, glass effects, etc.) are centralized and referenced across all components. This means:
+
+✅ **Change transition speed once** → affects all elements automatically  
+✅ **Modify glass hover effect once** → updates cards, header, buttons, footer  
+✅ **Adjust shadow system once** → cascades to entire site  
+✅ **Zero duplicate code** → maintainable and consistent  
+
+**Example:**
+```css
+/* GOOD: Unified system */
+.glass-hover-effect,
+.card:hover,
+.header:hover,
+.btn-glass:hover,
+.footer:hover {
+    backdrop-filter: blur(20px) saturate(1.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Shared properties here */
+}
+
+/* AVOID: Duplicate properties */
+.card:hover { backdrop-filter: blur(20px); transition: 0.2s; }
+.header:hover { backdrop-filter: blur(20px); transition: 0.2s; }
+.footer:hover { backdrop-filter: blur(20px); transition: 0.2s; }
+```
+
+This principle applies to:
+- **Hover states** (glass effects, shadows, transforms)
+- **Transitions** (timing, easing functions)  
+- **Glass effects** (backdrop-filter, saturate values)
+- **Shadow systems** (consistent depth and lighting)
+- **Animation timings** (unified cubic-bezier curves)
+
+---
+
 ## 🏗️ Architecture Overview
 
 This project uses a **component-based architecture** with reusable components, consistent design patterns, and clear separation of concerns.
@@ -189,6 +228,43 @@ git push             # Auto-deploys to luxsearch.eu
 - ✅ Test responsive behavior
 - ✅ Ensure consistent visual hierarchy
 - ✅ Update documentation if needed
+
+---
+
+## 🎯 **CRITICAL: CSS PROPERTY-LEVEL REUSE ENFORCEMENT**
+
+### **The "One Change Propagates Everywhere" Principle is MANDATORY**
+
+Before adding any CSS properties, **ALWAYS check if they already exist in a unified system**:
+
+#### **✅ REQUIRED CHECKS:**
+1. **Transitions** → Use unified `.glass-hover-effect` timing
+2. **Hover effects** → Extend unified `.glass-hover-effect` selector
+3. **Glass properties** → Reference shared backdrop-filter values
+4. **Shadows** → Use consistent shadow depth system
+5. **Animations** → Use shared cubic-bezier curves
+
+#### **🚫 VIOLATIONS TO AVOID:**
+```css
+/* WRONG: Duplicate transition */
+.new-element:hover { transition: all 0.3s ease; }
+
+/* RIGHT: Extend unified system */
+.glass-hover-effect,
+.card:hover,
+.header:hover,
+.btn-glass:hover,
+.footer:hover,
+.new-element:hover { /* Add here */ }
+```
+
+#### **⚡ WHY THIS MATTERS:**
+- **One change** to transition speed affects **entire site**
+- **Zero maintenance overhead** for global style updates
+- **Perfect consistency** across all interactions
+- **No forgotten elements** when updating effects
+
+**If you find duplicate CSS properties, consolidate them immediately. The architecture only works when rigorously followed.**
 
 ---
 
