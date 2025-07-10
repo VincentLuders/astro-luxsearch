@@ -1,244 +1,81 @@
 ---
 import Layout from '../components/Layout.astro';
+import { getAllJobs } from '../data/jobs.js';
+
+const jobs = getAllJobs();
 ---
 
 <Layout title="Opportunities" currentPage="opportunities">
-    <!-- Job Modal Overlay -->
-    <div id="jobModal" class="job-modal-overlay">
-        <div class="job-modal-backdrop"></div>
-        <div class="job-modal-content">
-            <button class="job-modal-close" aria-label="Close job description">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            
-            <!-- Modal content will be populated by JavaScript -->
-            <div id="modalJobContent"></div>
-        </div>
-    </div>
-
     <div class="jobs-container grid-2">
-        <!-- Job Card 1 - Full Stack AI Developer -->
-        <div class="card card-medium job-card" data-job-id="fullstack-ai-developer">
-            <h3 class="title">Full Stack AI Developer</h3>
-            <div class="tags">
-                <span class="tag">German</span>
-                <span class="tag">AI</span>
-                <span class="tag">TypeScript</span>
+        {jobs.map(job => (
+            <div class="card card-medium job-card" data-job-id={job.id}>
+                <h3 class="title">{job.title}</h3>
+                <div class="tags">
+                    {job.tags.map(tag => (
+                        <span class="tag">{tag}</span>
+                    ))}
+                </div>
+                <div class="job-details">
+                    <span class="salary">{job.salary}</span>
+                    <span class="location">{job.location}</span>
+                </div>
+                <button class="btn btn-full mt-auto apply-btn">Apply</button>
             </div>
-            <div class="job-details">
-                <span class="salary">80k - 90k EUR</span>
-                <span class="location">Luxembourg City</span>
-            </div>
-            <button class="btn btn-full mt-auto apply-btn">Apply</button>
-        </div>
-
-        <!-- Job Card 2 -->
-        <div class="card card-medium">
-            <h3 class="title">Senior DevOps Engineer</h3>
-            <div class="tags">
-                <span class="tag">Kubernetes</span>
-                <span class="tag">AWS</span>
-                <span class="tag">Python</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">85k - 100k EUR</span>
-                <span class="location">Luxembourg South</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 3 -->
-        <div class="card card-medium">
-            <h3 class="title">Data Science Lead</h3>
-            <div class="tags">
-                <span class="tag">Machine Learning</span>
-                <span class="tag">Python</span>
-                <span class="tag">SQL</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">95k - 115k EUR</span>
-                <span class="location">Luxembourg North</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 4 -->
-        <div class="card card-medium">
-            <h3 class="title">Cloud Architect</h3>
-            <div class="tags">
-                <span class="tag">Azure</span>
-                <span class="tag">Terraform</span>
-                <span class="tag">Security</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">90k - 110k EUR</span>
-                <span class="location">Luxembourg City</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 5 -->
-        <div class="card card-medium">
-            <h3 class="title">Frontend React Developer</h3>
-            <div class="tags">
-                <span class="tag">React</span>
-                <span class="tag">TypeScript</span>
-                <span class="tag">GraphQL</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">70k - 85k EUR</span>
-                <span class="location">Luxembourg South</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 6 -->
-        <div class="card card-medium">
-            <h3 class="title">Blockchain Developer</h3>
-            <div class="tags">
-                <span class="tag">Solidity</span>
-                <span class="tag">Web3</span>
-                <span class="tag">Node.js</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">85k - 105k EUR</span>
-                <span class="location">Luxembourg North</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 7 -->
-        <div class="card card-medium">
-            <h3 class="title">Backend Java Engineer</h3>
-            <div class="tags">
-                <span class="tag">Java</span>
-                <span class="tag">Spring Boot</span>
-                <span class="tag">Microservices</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">75k - 90k EUR</span>
-                <span class="location">Luxembourg City</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 8 -->
-        <div class="card card-medium">
-            <h3 class="title">Mobile App Developer</h3>
-            <div class="tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">iOS</span>
-                <span class="tag">Android</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">70k - 85k EUR</span>
-                <span class="location">Luxembourg South</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 9 -->
-        <div class="card card-medium">
-            <h3 class="title">Security Engineer</h3>
-            <div class="tags">
-                <span class="tag">Penetration Testing</span>
-                <span class="tag">SIEM</span>
-                <span class="tag">Python</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">80k - 95k EUR</span>
-                <span class="location">Luxembourg North</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 10 -->
-        <div class="card card-medium">
-            <h3 class="title">ML Operations Engineer</h3>
-            <div class="tags">
-                <span class="tag">MLOps</span>
-                <span class="tag">Docker</span>
-                <span class="tag">TensorFlow</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">85k - 100k EUR</span>
-                <span class="location">Luxembourg City</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 11 -->
-        <div class="card card-medium">
-            <h3 class="title">QA Automation Lead</h3>
-            <div class="tags">
-                <span class="tag">Selenium</span>
-                <span class="tag">Cypress</span>
-                <span class="tag">CI/CD</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">75k - 90k EUR</span>
-                <span class="location">Luxembourg South</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
-
-        <!-- Job Card 12 -->
-        <div class="card card-medium">
-            <h3 class="title">Platform Engineer</h3>
-            <div class="tags">
-                <span class="tag">Kubernetes</span>
-                <span class="tag">GitOps</span>
-                <span class="tag">Go</span>
-            </div>
-            <div class="job-details">
-                <span class="salary">80k - 95k EUR</span>
-                <span class="location">Luxembourg North</span>
-            </div>
-            <button class="btn btn-full mt-auto">Apply</button>
-        </div>
+        ))}
     </div>
 
-    <!-- Job Description Data -->
-    <script type="application/json" id="jobDescriptions">
-    {
-        "fullstack-ai-developer": {
-            "title": "Full Stack AI Developer",
-            "tags": ["German", "AI", "TypeScript"],
-            "salary": "80k - 90k EUR",
-            "location": "Luxembourg City",
-            "description": {
-                "overview": "Join our innovative team as a Full Stack AI Developer where you'll build cutting-edge applications that integrate artificial intelligence seamlessly into user experiences. You'll work with the latest AI technologies while crafting beautiful, performant web applications.",
-                "responsibilities": [
-                    "Develop and maintain full-stack applications with AI integration",
-                    "Design and implement machine learning pipelines and APIs",
-                    "Collaborate with data scientists to integrate AI models into production",
-                    "Build responsive, accessible frontend interfaces using modern frameworks",
-                    "Optimize application performance and ensure scalability",
-                    "Participate in code reviews and maintain high code quality standards"
-                ],
-                "requirements": [
-                    "Fluency in German and English",
-                    "4+ years experience in full-stack development",
-                    "Strong proficiency in TypeScript and modern JavaScript",
-                    "Experience with AI/ML frameworks (TensorFlow, PyTorch, or similar)",
-                    "Knowledge of Node.js, React, and cloud platforms",
-                    "Understanding of REST APIs and database design"
-                ],
-                "benefits": [
-                    "Competitive salary: 80k - 90k EUR",
-                    "Flexible working hours and hybrid work options",
-                    "Latest MacBook Pro and development equipment",
-                    "Learning budget for conferences and courses",
-                    "Health insurance and wellness programs",
-                    "Team building events and company retreats"
-                ]
-            }
+    <script is:inline>
+        // Job card navigation functionality
+        function initJobCardNavigation() {
+            console.log('Setting up job card navigation...');
+            const jobCards = document.querySelectorAll('.job-card');
+            console.log(`Found ${jobCards.length} job cards`);
+            
+            // Add click listeners to job cards for navigation
+            jobCards.forEach(card => {
+                const jobId = card.dataset.jobId;
+                console.log(`Setting up card with job ID: ${jobId}`);
+                
+                // Add visual feedback immediately
+                card.style.cursor = 'pointer';
+                
+                // Add hover effect for better UX
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-2px)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                });
+                
+                card.addEventListener('click', (e) => {
+                    console.log('Job card clicked!', jobId);
+                    
+                    // Don't navigate if apply button was clicked
+                    if (e.target.closest('.apply-btn')) {
+                        console.log('Apply button clicked, not navigating');
+                        e.stopPropagation();
+                        return;
+                    }
+                    
+                    // Temporary alert for testing
+                    alert(`Clicked job: ${jobId}. This will navigate to /opportunities/${jobId}`);
+                    
+                    if (jobId) {
+                        const url = `/opportunities/${jobId}`;
+                        console.log(`Navigating to: ${url}`);
+                        window.location.href = url;
+                    } else {
+                        console.error('No job ID found for card');
+                    }
+                });
+            });
         }
-    }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initJobCardNavigation);
+        } else {
+            initJobCardNavigation();
+        }
     </script>
-
-
 </Layout> 

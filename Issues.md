@@ -32,3 +32,13 @@ Please read the read me first and then lookup astro documentation on why our imp
     Again, look at our architecture described in @README.md.
     And look up online @Web for the right documentation for our code and check if anything is 
     different with Astro.
+
+
+- Vincent Lüders - Doesn't work this shit
+	"Vincent Lüders" on the about us card doesn't work with the gradient colors. A junior dev tried to change its color but it eventually only looks blue.  
+	  
+	You can take the exact same gredient color logic that we use for "class="brand-tagline" . Please look it up!  
+	  
+	And the Quote border line doesn't use the gradient colors either.  
+	  
+	You must place the colors vertical, from top to bottom blue to purple to blue.    
