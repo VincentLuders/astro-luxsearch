@@ -313,13 +313,7 @@ const { title, currentPage } = Astro.props;
                     </div>
 
                     <div class="job-modal-footer">
-                        <!-- Hidden form for Netlify detection -->
-                        <form name="job-application" data-netlify="true" netlify-honeypot="bot-field" hidden>
-                            <input type="file" name="cv" />
-                            <input type="text" name="position" />
-                        </form>
-
-                        <!-- Actual application form -->
+                        <!-- Application form -->
                         <form name="job-application" id="applicationForm" data-netlify="true" enctype="multipart/form-data" method="POST" action="/thank-you">
                             <input type="hidden" name="form-name" value="job-application" />
                             <input type="hidden" name="position" id="jobPosition" />
@@ -416,22 +410,17 @@ const { title, currentPage } = Astro.props;
                     fileInput.value = '';
                     fileUploadArea.style.display = '';
                     fileSelected.style.display = 'none';
-                    updateSubmitButton();
-                }
-
-                function updateSubmitButton() {
-                    const hasFile = fileInput.files.length > 0;
-                    console.log('[updateSubmitButton] hasFile', hasFile, 'disabled(before)', submitBtn.disabled);
-                    if (hasFile) {
-                        submitBtn.disabled = false;
-                        submitBtn.removeAttribute('disabled');
-                    } else {
+                    
+                    // Disable submit button when file is removed
+                    const submitBtn = document.getElementById('submitApplication');
+                    if (submitBtn) {
                         submitBtn.disabled = true;
                         submitBtn.setAttribute('disabled', '');
+                        submitBtn.classList.remove('btn-submit-active');
                     }
-                    submitBtn.classList.toggle('btn-submit-active', hasFile);
-                    console.log('[updateSubmitButton] disabled(after)', submitBtn.disabled);
                 }
+
+
 
                 // Handle real form submission
                 applicationForm.addEventListener('submit', (e) => {
