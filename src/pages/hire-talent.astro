@@ -71,7 +71,8 @@ import Layout from '../components/Layout.astro';
                 </ul>
                 <br>
                 That's why we selectively choose our partners. Unfortunately, we cannot work with every company.
-                Let's find out if our collaboration makes sense.
+                <br><br>
+                Let's find out if our collaboration makes sense. Schedule your meeting or request a callback.
             </div>
         </div>
 
@@ -79,7 +80,7 @@ import Layout from '../components/Layout.astro';
         <div class="card card-tall">
             <h3 class="title">Schedule your meeting:</h3>
             <div class="body-text">
-                Book a convenient time to discuss your hiring needs and explore how we can help you find the perfect candidate.
+                Within 60 minutes, we'll discuss needs, giving us the information required to fill your vacancy.
             </div>
             <!-- Google Calendar Appointment Scheduling begin -->
             <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3ANkG43G6VgWyb_yeAjqTRoJX_do77uxpSfc3mjLQL-0vB8_Msqm-i0cJfeI5OoBTwU5NOXgWf?gv=true" style="border: 0; border-radius: var(--radius-card); margin-top: var(--spacing-md);" width="100%" height="600" frameborder="0"></iframe>
@@ -89,7 +90,7 @@ import Layout from '../components/Layout.astro';
         <!-- Request Callback Card -->
         <div class="card card-tall">
             <h3 class="title">Request a Callback</h3>
-            <div class="body-text">
+            <div class="body-text flex-1">
                 Share your contact details and we'll call you back to discuss your hiring needs.
             </div>
 
@@ -101,7 +102,7 @@ import Layout from '../components/Layout.astro';
             </form>
 
             <!-- Actual callback form -->
-            <form name="callback-request" id="callbackForm" data-netlify="true" method="POST">
+            <form name="callback-request" id="callbackForm" data-netlify="true" method="POST" class="application-form">
                 <input type="hidden" name="form-name" value="callback-request" />
                 
                 <!-- Honeypot for bots -->
@@ -109,30 +110,28 @@ import Layout from '../components/Layout.astro';
                     <label>Don't fill this out if you're human: <input name="bot-field" /></label>
                 </div>
 
-                <div class="application-form">
-                    <div class="form-group">
-                        <label for="callbackName" class="form-label">Name</label>
-                        <input type="text" name="name" id="callbackName" class="form-control" placeholder="Your full name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="callbackPhone" class="form-label">Phone</label>
-                        <input type="tel" name="phone" id="callbackPhone" class="form-control" placeholder="Your phone number" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="callbackEmail" class="form-label">Email</label>
-                        <input type="email" name="email" id="callbackEmail" class="form-control" placeholder="your.email@example.com" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-submit" id="submitCallback">
-                        <span>Request Callback</span>
-                    </button>
-
-                    <p class="privacy-notice small-text">
-                        By submitting, you agree to our <a href="/privacy-policy" class="privacy-link">Privacy Policy</a> and <a href="/terms-of-use" class="privacy-link">Terms of Use</a>.
-                    </p>
+                <div class="form-group">
+                    <label for="callbackName" class="form-label">Name</label>
+                    <input type="text" name="name" id="callbackName" class="form-control" placeholder="Your full name" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="callbackPhone" class="form-label">Phone</label>
+                    <input type="tel" name="phone" id="callbackPhone" class="form-control" placeholder="Your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="callbackEmail" class="form-label">Email</label>
+                    <input type="email" name="email" id="callbackEmail" class="form-control" placeholder="your.email@example.com" required>
+                </div>
+
+                <button type="submit" class="btn btn-submit" id="submitCallback">
+                    <span>Request Callback</span>
+                </button>
+
+                <p class="privacy-notice small-text">
+                    By submitting, you agree to our <a href="/privacy-policy" class="privacy-link">Privacy Policy</a> and <a href="/terms-of-use" class="privacy-link">Terms of Use</a>.
+                </p>
             </form>
 
             <script>
