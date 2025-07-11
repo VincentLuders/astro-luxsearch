@@ -59,6 +59,22 @@ const { title, currentPage } = Astro.props;
     <!-- Footer -->
     <Footer />
 
+    <!-- Job Modal Overlay - Available on all pages -->
+    <div id="jobModal" class="job-modal-overlay">
+        <div class="job-modal-backdrop"></div>
+        <div class="job-modal-content">
+            <button class="job-modal-close" aria-label="Close modal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <!-- Modal content will be populated by JavaScript -->
+            <div id="modalJobContent"></div>
+        </div>
+    </div>
+
     <!-- Hidden Netlify Form for Callback Requests -->
     <form name="callback-request" data-netlify="true" netlify-honeypot="bot-field" hidden>
         <input type="text" name="name" />
@@ -509,20 +525,29 @@ const { title, currentPage } = Astro.props;
         // Callback functionality using existing job modal system
         function initializeCallbackButtons() {
             const callbackButtons = document.querySelectorAll('a[href="#callback"]');
+            console.log('Found callback buttons:', callbackButtons.length);
             
             callbackButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
+                    console.log('Callback button clicked!');
                     openCallbackModal();
                 });
             });
         }
 
         function openCallbackModal() {
+            console.log('Opening callback modal...');
             const jobModal = document.getElementById('jobModal');
             const modalContent = document.getElementById('modalJobContent');
             
-            if (!jobModal || !modalContent) return;
+            console.log('jobModal:', jobModal);
+            console.log('modalContent:', modalContent);
+            
+            if (!jobModal || !modalContent) {
+                console.log('Modal elements not found!');
+                return;
+            }
 
             // Create callback form content using existing modal structure
             modalContent.innerHTML = createCallbackContent();
@@ -530,6 +555,8 @@ const { title, currentPage } = Astro.props;
             // Show modal using existing system
             document.body.classList.add('modal-open');
             jobModal.classList.add('active');
+            
+            console.log('Modal should be visible now');
             
             // Add callback form functionality
             addCallbackFormInteractivity();
@@ -581,33 +608,65 @@ const { title, currentPage } = Astro.props;
             `;
         }
 
-        function addCallbackFormInteractivity() {
-            const callbackForm = document.getElementById('callbackForm');
-            if (!callbackForm) return;
+                 function addCallbackFormInteractivity() {
+             const callbackForm = document.getElementById('callbackForm');
+             if (!callbackForm) return;
 
-            callbackForm.addEventListener('submit', (e) => {
-                const submitBtn = document.getElementById('submitCallback');
+             callbackForm.addEventListener('submit', (e) => {
+                 const submitBtn = document.getElementById('submitCallback');
+                 
+                 // Form will be submitted normally to Netlify
+                 submitBtn.disabled = true;
+                 submitBtn.innerHTML = '<span>Submitting...</span>';
+                 
+                 // After form submits, redirect to thank-you page
+                 setTimeout(() => {
+                     window.location.href = '/thank-you';
+                 }, 1000);
+             });
+         }
+
+        // Initialize global modal functionality
+        function initializeGlobalModal() {
+            const jobModal = document.getElementById('jobModal');
+            const closeBtn = document.querySelector('.job-modal-close');
+            const backdrop = document.querySelector('.job-modal-backdrop');
+            
+            if (!jobModal) return;
+
+            // Close modal function
+            function closeModal() {
+                jobModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
                 
-                // Form will be submitted normally to Netlify
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<span>Submitting...</span>';
-                
-                // After form submits, close modal and show success
-                setTimeout(() => {
-                    const jobModal = document.getElementById('jobModal');
-                    if (jobModal) {
-                        jobModal.classList.remove('active');
-                        document.body.classList.remove('modal-open');
-                    }
-                    alert('Thank you! We will call you back soon.');
-                }, 1000);
+                // Clear URL parameter if it exists
+                const urlWithoutJob = window.location.pathname;
+                window.history.pushState({}, '', urlWithoutJob);
+            }
+
+            // Close button listener
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
+
+            // Backdrop click listener
+            if (backdrop) {
+                backdrop.addEventListener('click', closeModal);
+            }
+
+            // ESC key listener
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && jobModal.classList.contains('active')) {
+                    closeModal();
+                }
             });
         }
 
         // Initialize callback buttons on page load
         initializeCallbackButtons();
+        initializeGlobalModal();
 
-        // Re-initialize callback buttons after SPA navigation
+        // Re-initialize after SPA navigation
         const originalInitializePageInteractivity = initializePageInteractivity;
         function initializePageInteractivity() {
             originalInitializePageInteractivity();
