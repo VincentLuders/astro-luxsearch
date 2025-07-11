@@ -1,6 +1,6 @@
 # Component Quick Reference Guide
 
-> 🚀 Fast lookup for creating new pages and components in the LuxSearch system
+> 🚀 Fast lookup for creating new pages and components in the luxsearch® system
 
 ## 🎯 Page Creation Template
 

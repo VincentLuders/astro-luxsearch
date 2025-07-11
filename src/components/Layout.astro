@@ -16,7 +16,7 @@ const { title, currentPage } = Astro.props;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title} - luxsearch</title>
+    <title>{title} | luxsearch®</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -329,7 +329,7 @@ const { title, currentPage } = Astro.props;
                                 <label class="checkbox-container">
                                     <input type="checkbox" id="newsletterConsent">
                                     <span class="checkmark"></span>
-                                    <span class="small-text">Send me job alerts and updates from luxsearch (unsubscribe anytime).</span>
+                                    <span class="small-text">Send me job alerts and updates from luxsearch® (unsubscribe anytime).</span>
                                 </label>
                             </div>
 
@@ -401,7 +401,7 @@ const { title, currentPage } = Astro.props;
                 submitBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     if (fileInput.files.length > 0) {
-                        showNotification('Success!', 'Application submitted successfully! We will be in touch soon.', 'success');
+                        alert('Application submitted successfully! We will be in touch soon.');
                         closeJobModal();
                     }
                 });

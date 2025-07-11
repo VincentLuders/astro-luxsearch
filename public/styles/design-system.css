@@ -1,6 +1,8 @@
 /* =================================================================
-   LUXSEARCH DESIGN SYSTEM
+   luxsearch® DESIGN SYSTEM
    ================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 /* Reset and Base Styles */
 * {
@@ -114,7 +116,7 @@ html {
 
 html, body {
     height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI Variable", "Segoe UI", system-ui, Roboto, "Helvetica Neue", sans-serif;
 }
 
 body {

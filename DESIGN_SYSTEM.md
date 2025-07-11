@@ -1,6 +1,6 @@
-# LuxSearch Design System Documentation
+# luxsearch® Design System Documentation
 
-> 🎨 Complete guide to the LuxSearch visual design language and CSS implementation
+> 🎨 Complete guide to the luxsearch® visual design language and CSS implementation
 
 ## 🎯 Design Philosophy
 

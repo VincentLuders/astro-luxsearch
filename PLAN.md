@@ -1,4 +1,4 @@
-# LuxSearch CSS Consolidation Plan
+# luxsearch® CSS Consolidation Plan
 
 > 🎯 **Mission**: Implement "One Change Propagates Everywhere" across all CSS properties  
 > 📖 **Architecture Guide**: See [README.md](./README.md) for core principles and patterns
