@@ -1776,23 +1776,28 @@ body.modal-open {
 }
 
 .btn-submit:disabled {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--color-text-secondary);
-    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--color-text-secondary) !important;
+    cursor: not-allowed !important;
+    /* Fixed shadow that never changes */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
     /* Remove hover animations when disabled */
-    transition: none;
+    transition: none !important;
+    transform: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 .btn-submit:disabled:hover {
-    /* Explicitly prevent ALL hover effects when disabled - override any unified system */
+    /* Explicitly prevent any hover effects when disabled - keep everything exactly the same */
     background: rgba(255, 255, 255, 0.1) !important;
     color: var(--color-text-secondary) !important;
+    cursor: not-allowed !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
     transform: none !important;
-    box-shadow: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     border: none !important;
-    transition: none !important;
 }
 
 /* When active, use the same beautiful transparent design as btn-primary */
@@ -2187,7 +2192,7 @@ body.modal-open {
 .card:hover,
 .header:hover,
 .btn-glass:hover,
-.btn-primary:not(:disabled):hover,
+.btn-primary:hover,
 .btn-submit-active:hover,
 .footer:hover,
 .job-modal-content:hover {
