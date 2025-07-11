@@ -401,7 +401,7 @@ const { title, currentPage } = Astro.props;
                 submitBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     if (fileInput.files.length > 0) {
-                        alert('Application submitted successfully! We will be in touch soon.');
+                        showNotification('Success!', 'Application submitted successfully! We will be in touch soon.', 'success');
                         closeJobModal();
                     }
                 });
