@@ -59,6 +59,68 @@ const { title, currentPage } = Astro.props;
     <!-- Footer -->
     <Footer />
 
+    <!-- Callback Modal -->
+    <div id="callbackModal" class="job-modal-overlay">
+        <div class="job-modal-backdrop"></div>
+        <div class="job-modal-content">
+            <button class="job-modal-close" id="callbackModalClose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <div class="job-modal-header">
+                <h2 class="title">Request a Callback</h2>
+                <p class="body-text">Share your contact details and we'll call you back to discuss your hiring needs.</p>
+            </div>
+
+            <div class="job-modal-footer">
+                <!-- Hidden form for Netlify detection -->
+                <form name="callback-request" data-netlify="true" netlify-honeypot="bot-field" hidden>
+                    <input type="text" name="name" />
+                    <input type="tel" name="phone" />
+                    <input type="email" name="email" />
+                </form>
+
+                <!-- Actual callback form -->
+                <form name="callback-request" id="callbackForm" data-netlify="true" method="POST">
+                    <input type="hidden" name="form-name" value="callback-request" />
+                    
+                    <!-- Honeypot for bots -->
+                    <div style="display: none;">
+                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </div>
+
+                    <div class="application-form">
+                        <div class="form-group">
+                            <label for="callbackName" class="form-label">Name</label>
+                            <input type="text" name="name" id="callbackName" class="form-control" placeholder="Your full name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="callbackPhone" class="form-label">Phone</label>
+                            <input type="tel" name="phone" id="callbackPhone" class="form-control" placeholder="Your phone number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="callbackEmail" class="form-label">Email</label>
+                            <input type="email" name="email" id="callbackEmail" class="form-control" placeholder="your.email@example.com" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-submit" id="submitCallback">
+                            <span>Request Callback</span>
+                        </button>
+
+                        <p class="privacy-notice small-text">
+                            By submitting, you agree to our <a href="/privacy-policy" class="privacy-link">Privacy Policy</a> and <a href="/terms-of-use" class="privacy-link">Terms of Use</a>.
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Enhanced SPA navigation
         document.addEventListener('DOMContentLoaded', () => {
@@ -497,6 +559,80 @@ const { title, currentPage } = Astro.props;
                     }
                 }, 100);
             }
+        }
+
+        // Callback Modal Functionality
+        function initializeCallbackModal() {
+            const callbackButtons = document.querySelectorAll('a[href="#callback"]');
+            const callbackModal = document.getElementById('callbackModal');
+            const callbackModalClose = document.getElementById('callbackModalClose');
+            const callbackBackdrop = callbackModal?.querySelector('.job-modal-backdrop');
+            const callbackForm = document.getElementById('callbackForm');
+
+            if (!callbackModal || !callbackForm) return;
+
+            // Open callback modal
+            function openCallbackModal() {
+                document.body.classList.add('modal-open');
+                callbackModal.classList.add('active');
+                // Reset form
+                callbackForm.reset();
+            }
+
+            // Close callback modal
+            function closeCallbackModal() {
+                callbackModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+
+            // Add click listeners to callback buttons
+            callbackButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openCallbackModal();
+                });
+            });
+
+            // Close modal events
+            if (callbackModalClose) {
+                callbackModalClose.addEventListener('click', closeCallbackModal);
+            }
+
+            if (callbackBackdrop) {
+                callbackBackdrop.addEventListener('click', closeCallbackModal);
+            }
+
+            // Escape key listener
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && callbackModal.classList.contains('active')) {
+                    closeCallbackModal();
+                }
+            });
+
+            // Handle form submission
+            callbackForm.addEventListener('submit', (e) => {
+                const submitBtn = document.getElementById('submitCallback');
+                
+                // Form will be submitted normally to Netlify
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>Submitting...</span>';
+                
+                // After form submits, close modal and show success
+                setTimeout(() => {
+                    closeCallbackModal();
+                    alert('Thank you! We will call you back soon.');
+                }, 1000);
+            });
+        }
+
+        // Initialize callback modal on page load
+        initializeCallbackModal();
+
+        // Re-initialize callback modal after SPA navigation
+        const originalInitializePageInteractivity = initializePageInteractivity;
+        function initializePageInteractivity() {
+            originalInitializePageInteractivity();
+            initializeCallbackModal();
         }
     </script>
 </body>
