@@ -595,7 +595,7 @@ const { title, currentPage } = Astro.props;
                                 <input type="email" name="email" id="callbackEmail" class="form-control" placeholder="your.email@example.com" required>
                             </div>
 
-                            <button type="submit" class="btn btn-submit" id="submitCallback">
+                            <button type="submit" class="btn btn-submit" id="submitCallback" disabled>
                                 <span>Request Callback</span>
                             </button>
 
@@ -610,10 +610,45 @@ const { title, currentPage } = Astro.props;
 
                  function addCallbackFormInteractivity() {
              const callbackForm = document.getElementById('callbackForm');
-             if (!callbackForm) return;
+             const submitBtn = document.getElementById('submitCallback');
+             const nameInput = document.getElementById('callbackName');
+             const phoneInput = document.getElementById('callbackPhone');
+             const emailInput = document.getElementById('callbackEmail');
+             
+             if (!callbackForm || !submitBtn) return;
+
+             // Update submit button state based on form validation - same logic as submitApplication
+             function updateSubmitButton() {
+                 const isFormValid = nameInput.value.trim() && 
+                                   phoneInput.value.trim() && 
+                                   emailInput.value.trim() && 
+                                   emailInput.checkValidity();
+                 
+                 if (isFormValid) {
+                     submitBtn.disabled = false;
+                     submitBtn.removeAttribute('disabled');
+                     submitBtn.classList.add('btn-submit-active');
+                 } else {
+                     submitBtn.disabled = true;
+                     submitBtn.setAttribute('disabled', '');
+                     submitBtn.classList.remove('btn-submit-active');
+                 }
+             }
+
+             // Listen to input changes - same pattern as submitApplication
+             [nameInput, phoneInput, emailInput].forEach(input => {
+                 input.addEventListener('input', updateSubmitButton);
+                 input.addEventListener('blur', updateSubmitButton);
+             });
+
+             // Initial state check
+             updateSubmitButton();
 
              callbackForm.addEventListener('submit', (e) => {
-                 const submitBtn = document.getElementById('submitCallback');
+                 if (!submitBtn.classList.contains('btn-submit-active')) {
+                     e.preventDefault();
+                     return;
+                 }
                  
                  // Form will be submitted normally to Netlify
                  submitBtn.disabled = true;
