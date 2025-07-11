@@ -243,6 +243,14 @@ const { title, currentPage } = Astro.props;
                 // Add modal functionality
                 addModalInteractivity();
                 
+                // Set the job position in the hidden field
+                setTimeout(() => {
+                    const jobPositionField = document.getElementById('jobPosition');
+                    if (jobPositionField) {
+                        jobPositionField.value = jobData.title;
+                    }
+                }, 10);
+                
                 // Reset modal scroll position to top - prevents scroll position memory issue
                 const modalContainer = document.querySelector('.job-modal-content');
                 if (modalContainer) {
@@ -305,52 +313,65 @@ const { title, currentPage } = Astro.props;
                     </div>
 
                     <div class="job-modal-footer">
-                        <div class="application-form">
-                            <div class="file-upload-container">
-                                <div class="file-upload-area" id="fileUploadArea">
-                                    <div class="file-upload-content">
-                                        <svg class="file-upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                            <polyline points="7,10 12,15 17,10"></polyline>
-                                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                                        </svg>
-                                        <h4>Drop your CV here or click to browse</h4>
-                                        <p class="small-text">PDF, DOC, DOCX (max 10MB)</p>
+                        <!-- Hidden form for Netlify detection -->
+                        <form name="job-application" data-netlify="true" netlify-honeypot="bot-field" hidden>
+                            <input type="file" name="cv" />
+                            <input type="text" name="position" />
+                        </form>
+
+                        <!-- Actual application form -->
+                        <form name="job-application" id="applicationForm" data-netlify="true" enctype="multipart/form-data" method="POST" action="/thank-you">
+                            <input type="hidden" name="form-name" value="job-application" />
+                            <input type="hidden" name="position" id="jobPosition" />
+                            
+                            <!-- Honeypot for bots -->
+                            <div style="display: none;">
+                                <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                            </div>
+
+                            <div class="application-form">
+                                <div class="file-upload-container">
+                                    <div class="file-upload-area" id="fileUploadArea">
+                                        <div class="file-upload-content">
+                                            <svg class="file-upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7,10 12,15 17,10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                            <h4>Drop your CV here or click to browse</h4>
+                                            <p class="small-text">PDF, DOC, DOCX</p>
+                                        </div>
+                                        <input type="file" name="cv" id="cvFile" accept=".pdf,.doc,.docx" required hidden>
                                     </div>
-                                    <input type="file" id="cvFile" accept=".pdf,.doc,.docx" hidden>
+                                    <div class="file-selected" id="fileSelected" style="display: none;">
+                                        <span class="file-name" id="fileName"></span>
+                                        <button type="button" class="file-remove" id="fileRemove">×</button>
+                                    </div>
                                 </div>
-                                <div class="file-selected" id="fileSelected" style="display: none;">
-                                    <span class="file-name" id="fileName"></span>
-                                    <button type="button" class="file-remove" id="fileRemove">×</button>
-                                </div>
+
+                                <button type="submit" class="btn btn-submit" id="submitApplication" disabled>
+                                    <span>Submit Application</span>
+                                </button>
+
+                                <p class="privacy-notice small-text">
+                                    By submitting, you accept our <a href="/privacy-policy" class="privacy-link">Privacy Policy</a> and <a href="/terms-of-use" class="privacy-link">Terms of Use</a>.
+                                </p>
                             </div>
-
-                            <div class="form-checkboxes">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" id="newsletterConsent">
-                                    <span class="checkmark"></span>
-                                    <span class="small-text">Send me job alerts and updates from luxsearch® (unsubscribe anytime).</span>
-                                </label>
-                            </div>
-
-                            <button class="btn btn-submit" id="submitApplication" disabled>
-                                <span>Submit Application</span>
-                            </button>
-
-                            <p class="privacy-notice small-text">
-                                By submitting, you accept our <a href="#" class="privacy-link">Privacy Policy</a> and <a href="#" class="privacy-link">Terms of Use</a> and allow us to share your data with our partner companies.
-                            </p>
-                        </div>
+                        </form>
                     </div>
                 `;
             }
 
             function addModalInteractivity() {
+                console.log('[addModalInteractivity] Starting setup...');
                 const fileUploadArea = document.getElementById('fileUploadArea');
                 const fileInput = document.getElementById('cvFile');
                 const fileSelected = document.getElementById('fileSelected');
                 const fileName = document.getElementById('fileName');
                 const fileRemove = document.getElementById('fileRemove');
+                const submitBtn = document.getElementById('submitApplication');
+                const applicationForm = document.getElementById('applicationForm');
+                console.log('[addModalInteractivity] Elements found:', {fileUploadArea, fileInput, submitBtn});
 
                 // File upload interactions
                 fileUploadArea.addEventListener('click', () => fileInput.click());
@@ -379,6 +400,15 @@ const { title, currentPage } = Astro.props;
                         fileName.textContent = file.name;
                         fileUploadArea.style.display = 'none';
                         fileSelected.style.display = 'flex';
+                        
+                        // Enable submit button directly
+                        const submitBtn = document.getElementById('submitApplication');
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.removeAttribute('disabled');
+                            submitBtn.classList.add('btn-submit-active');
+                            console.log('Submit button enabled!');
+                        }
                     }
                 }
 
@@ -386,10 +416,35 @@ const { title, currentPage } = Astro.props;
                     fileInput.value = '';
                     fileUploadArea.style.display = '';
                     fileSelected.style.display = 'none';
+                    updateSubmitButton();
                 }
 
+                function updateSubmitButton() {
+                    const hasFile = fileInput.files.length > 0;
+                    console.log('[updateSubmitButton] hasFile', hasFile, 'disabled(before)', submitBtn.disabled);
+                    if (hasFile) {
+                        submitBtn.disabled = false;
+                        submitBtn.removeAttribute('disabled');
+                    } else {
+                        submitBtn.disabled = true;
+                        submitBtn.setAttribute('disabled', '');
+                    }
+                    submitBtn.classList.toggle('btn-submit-active', hasFile);
+                    console.log('[updateSubmitButton] disabled(after)', submitBtn.disabled);
+                }
 
-                // Submit form
+                // Handle real form submission
+                applicationForm.addEventListener('submit', (e) => {
+                    if (!fileInput.files.length) {
+                        e.preventDefault();
+                        alert('Please select a file to upload.');
+                        return;
+                    }
+                    
+                    // Form will be submitted normally to Netlify
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span>Submitting...</span>';
+                });
             }
 
             // Set up global URL management - make functions globally accessible
