@@ -73,10 +73,6 @@ import Layout from '../components/Layout.astro';
                 That's why we selectively choose our partners. Unfortunately, we cannot work with every company.
                 Let's find out if our collaboration makes sense.
             </div>
-            <div class="btn-group">
-                <a href="#callback" class="btn btn-primary btn-full">Receive a call back</a>
-                <a href="#schedule" class="btn btn-primary btn-full">Schedule your meeting</a>
-            </div>
         </div>
 
         <!-- Schedule Appointment Card -->
@@ -88,6 +84,77 @@ import Layout from '../components/Layout.astro';
             <!-- Google Calendar Appointment Scheduling begin -->
             <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3ANkG43G6VgWyb_yeAjqTRoJX_do77uxpSfc3mjLQL-0vB8_Msqm-i0cJfeI5OoBTwU5NOXgWf?gv=true" style="border: 0; border-radius: var(--radius-card); margin-top: var(--spacing-md);" width="100%" height="600" frameborder="0"></iframe>
             <!-- end Google Calendar Appointment Scheduling -->
+        </div>
+
+        <!-- Request Callback Card -->
+        <div class="card card-tall">
+            <h3 class="title">Request a Callback</h3>
+            <div class="body-text">
+                Share your contact details and we'll call you back to discuss your hiring needs.
+            </div>
+
+            <!-- Hidden form for Netlify detection -->
+            <form name="callback-request" data-netlify="true" netlify-honeypot="bot-field" hidden>
+                <input type="text" name="name" />
+                <input type="tel" name="phone" />
+                <input type="email" name="email" />
+            </form>
+
+            <!-- Actual callback form -->
+            <form name="callback-request" id="callbackForm" data-netlify="true" method="POST">
+                <input type="hidden" name="form-name" value="callback-request" />
+                
+                <!-- Honeypot for bots -->
+                <div style="display: none;">
+                    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </div>
+
+                <div class="application-form">
+                    <div class="form-group">
+                        <label for="callbackName" class="form-label">Name</label>
+                        <input type="text" name="name" id="callbackName" class="form-control" placeholder="Your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="callbackPhone" class="form-label">Phone</label>
+                        <input type="tel" name="phone" id="callbackPhone" class="form-control" placeholder="Your phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="callbackEmail" class="form-label">Email</label>
+                        <input type="email" name="email" id="callbackEmail" class="form-control" placeholder="your.email@example.com" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-submit" id="submitCallback">
+                        <span>Request Callback</span>
+                    </button>
+
+                    <p class="privacy-notice small-text">
+                        By submitting, you agree to our <a href="/privacy-policy" class="privacy-link">Privacy Policy</a> and <a href="/terms-of-use" class="privacy-link">Terms of Use</a>.
+                    </p>
+                </div>
+            </form>
+
+            <script>
+                // Add callback form functionality
+                document.addEventListener('DOMContentLoaded', function() {
+                    const callbackForm = document.getElementById('callbackForm');
+                    if (!callbackForm) return;
+
+                    callbackForm.addEventListener('submit', (e) => {
+                        const submitBtn = document.getElementById('submitCallback');
+                        
+                        // Form will be submitted normally to Netlify
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<span>Submitting...</span>';
+                        
+                        // After form submits, redirect to thank-you page
+                        setTimeout(() => {
+                            window.location.href = '/thank-you';
+                        }, 1000);
+                    });
+                });
+            </script>
         </div>
     </div>
 </Layout> 
