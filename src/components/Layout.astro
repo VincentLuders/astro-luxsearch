@@ -320,7 +320,7 @@ const { title, currentPage } = Astro.props;
                         </form>
 
                         <!-- Actual application form -->
-                        <form name="resume-submission" id="applicationForm" data-netlify="true" action="/thank-you">
+                        <form name="resume-submission" id="applicationForm" data-netlify="true" enctype="multipart/form-data" method="POST">
                             <input type="hidden" name="form-name" value="resume-submission" />
                             <input type="hidden" name="position" id="jobPosition" />
                             
@@ -444,6 +444,11 @@ const { title, currentPage } = Astro.props;
                     // Form will be submitted normally to Netlify
                     submitBtn.disabled = true;
                     submitBtn.innerHTML = '<span>Submitting...</span>';
+                    
+                    // After form submits, redirect to thank-you page
+                    setTimeout(() => {
+                        window.location.href = '/thank-you';
+                    }, 1000);
                 });
             }
 
