@@ -705,12 +705,12 @@
             <label for="resume" class="file-input-label">
               <i data-feather="upload-cloud" class="file-icon" style="width: 40px; height: 40px;"></i>
               <p class="file-text">Drag and drop your resume here or click to browse</p>
-              <p class="file-text">(PDF, DOCX, DOC, RTF)</p>
+              <p class="file-text">(Max: 8MB | PDF, DOCX, DOC)</p>
               <p class="file-name" id="fileName"></p>
             </label>
             <input type="file" id="resume" name="resume" class="file-input" accept=".pdf,.doc,.docx,.rtf" required>
           </div>
-          <p class="error-message" id="fileError">Please upload a valid resume file (PDF, DOCX, DOC, RTF).</p>
+          <p class="error-message" id="fileError">Please upload a valid resume file (Max: 8MB | PDF, DOCX, DOC).</p>
         </div>
         
         <button type="submit" class="submit-btn">Submit Resume</button>
