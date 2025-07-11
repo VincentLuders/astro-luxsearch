@@ -315,12 +315,12 @@ const { title, currentPage } = Astro.props;
                     <div class="job-modal-footer">
                         <!-- Hidden form for Netlify detection -->
                         <form name="resume-submission" data-netlify="true" netlify-honeypot="bot-field" hidden>
-                            <input type="file" name="cv" />
+                            <input type="file" name="resume" />
                             <input type="text" name="position" />
                         </form>
 
                         <!-- Actual application form -->
-                        <form name="resume-submission" id="applicationForm" data-netlify="true" enctype="multipart/form-data" method="POST" action="/thank-you">
+                        <form name="resume-submission" id="applicationForm" data-netlify="true" action="/thank-you">
                             <input type="hidden" name="form-name" value="resume-submission" />
                             <input type="hidden" name="position" id="jobPosition" />
                             
@@ -341,7 +341,7 @@ const { title, currentPage } = Astro.props;
                                             <h4>Drop your CV here or click to browse</h4>
                                             <p class="small-text">PDF, DOC, DOCX</p>
                                         </div>
-                                        <input type="file" name="cv" id="cvFile" accept=".pdf,.doc,.docx" required hidden>
+                                        <input type="file" name="resume" id="cvFile" accept=".pdf,.doc,.docx" required hidden>
                                     </div>
                                     <div class="file-selected" id="fileSelected" style="display: none;">
                                         <span class="file-name" id="fileName"></span>
