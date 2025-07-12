@@ -9,6 +9,7 @@
   from = "/"
   to = "/opportunities/"
   status = 301
+  force = true
 
 [context.production.environment]
   NODE_ENV = "production" 
