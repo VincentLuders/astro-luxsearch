@@ -1,13 +1,8 @@
 ---
 // Footer component with legal links
-export interface Props {
-    id?: string;
-}
-
-const { id } = Astro.props;
 ---
 
-<footer class="footer" {...(id && { id })}>
+<footer class="footer">
     <div class="footer-container">
         <div class="footer-links">
             <a href="/privacy-policy" class="footer-link nav-link">Privacy Policy</a>
