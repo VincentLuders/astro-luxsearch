@@ -138,9 +138,6 @@ body {
     /* Sticky Footer Layout */
     display: flex;
     flex-direction: column;
-    /* Prevent background flicker on mobile */
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
 }
 
 /* =================================================================
@@ -230,9 +227,6 @@ body {
     height: 100%;
     z-index: -2;
     overflow: hidden;
-    /* Performance optimizations */
-    will-change: transform;
-    transform: translateZ(0);
 }
 
 .gradient-blob {
@@ -244,17 +238,6 @@ body {
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
     opacity: 0.8;
-    /* Performance optimizations */
-    will-change: transform;
-    transform: translateZ(0);
-}
-
-/* Respect user's motion preferences */
-@media (prefers-reduced-motion: reduce) {
-    .gradient-blob {
-        animation: none;
-        transform: translateZ(0);
-    }
 }
 
 /* Individual blob configurations */
@@ -378,60 +361,60 @@ body {
     animation-delay: -12.22s;
 }
 
-/* Blob Animation Keyframes - Hardware accelerated */
+/* Blob Animation Keyframes */
 @keyframes morph1 {
     0%, 100% {
-        transform: translate3d(0, 0, 0) scale(1);
+        transform: translateX(0) translateY(0) scale(1);
         border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
     }
     25% {
-        transform: translate3d(-120px, 80px, 0) scale(1.1);
+        transform: translateX(-120px) translateY(80px) scale(1.1);
         border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
     }
     50% {
-        transform: translate3d(-200px, 50px, 0) scale(0.9);
+        transform: translateX(-200px) translateY(50px) scale(0.9);
         border-radius: 30% 70% 40% 60% / 70% 40% 60% 30%;
     }
     75% {
-        transform: translate3d(-150px, 120px, 0) scale(1.05);
+        transform: translateX(-150px) translateY(120px) scale(1.05);
         border-radius: 70% 30% 60% 40% / 30% 60% 40% 70%;
     }
 }
 
 @keyframes morph2 {
     0%, 100% {
-        transform: translate3d(0, 0, 0) scale(1);
+        transform: translateX(0) translateY(0) scale(1);
         border-radius: 50% 50% 80% 20% / 30% 70% 20% 80%;
     }
     33% {
-        transform: translate3d(120px, -80px, 0) scale(1.2);
+        transform: translateX(120px) translateY(-80px) scale(1.2);
         border-radius: 80% 20% 50% 50% / 70% 30% 80% 20%;
     }
     66% {
-        transform: translate3d(200px, 150px, 0) scale(0.8);
+        transform: translateX(200px) translateY(150px) scale(0.8);
         border-radius: 20% 80% 30% 70% / 50% 50% 20% 80%;
     }
 }
 
 @keyframes morph3 {
     0%, 100% {
-        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+        transform: translateX(0) translateY(0) scale(1) rotate(0deg);
         border-radius: 40% 60% 60% 40% / 60% 40% 40% 60%;
     }
     20% {
-        transform: translate3d(-120px, 80px, 0) scale(1.15) rotate(72deg);
+        transform: translateX(-120px) translateY(80px) scale(1.15) rotate(72deg);
         border-radius: 60% 40% 40% 60% / 40% 60% 60% 40%;
     }
     40% {
-        transform: translate3d(-200px, -40px, 0) scale(0.85) rotate(144deg);
+        transform: translateX(-200px) translateY(-40px) scale(0.85) rotate(144deg);
         border-radius: 80% 20% 70% 30% / 20% 80% 30% 70%;
     }
     60% {
-        transform: translate3d(-150px, -120px, 0) scale(1.1) rotate(216deg);
+        transform: translateX(-150px) translateY(-120px) scale(1.1) rotate(216deg);
         border-radius: 30% 70% 20% 80% / 70% 30% 80% 20%;
     }
     80% {
-        transform: translate3d(-80px, 60px, 0) scale(0.95) rotate(288deg);
+        transform: translateX(-80px) translateY(60px) scale(0.95) rotate(288deg);
         border-radius: 70% 30% 80% 20% / 30% 70% 20% 80%;
     }
 }
@@ -1619,21 +1602,6 @@ body {
     .btn-cta span span:first-child {
         font-size: 2rem !important;
     }
-    
-    /* Mobile-optimized gradient background */
-    .gradient-blob {
-        /* Reduce blur intensity on mobile for better performance */
-        filter: blur(30px);
-        /* Reduce opacity to minimize performance impact */
-        opacity: 0.7;
-        /* Slower, less intensive animations */
-        animation-duration: 16s;
-    }
-    
-    /* Hide some blobs on mobile to improve performance */
-    .gradient-blob:nth-child(n+9) {
-        display: none;
-    }
 }
 
 /* Additional mobile breakpoints for very small screens */
@@ -1659,29 +1627,6 @@ body {
     
     .brand-name {
         font-size: 1.1rem;
-    }
-    
-    /* Mobile-optimized gradient background */
-    .gradient-blob {
-        /* Reduce blur intensity on mobile for better performance */
-        filter: blur(25px);
-        /* Reduce opacity to minimize performance impact */
-        opacity: 0.6;
-        /* Slower, less intensive animations */
-        animation-duration: 18s;
-    }
-    
-    /* Hide some blobs on very small screens to improve performance */
-    .gradient-blob:nth-child(n+7) {
-        display: none;
-    }
-    
-    /* Fix background flickering on mobile Safari */
-    .gradient-bg {
-        -webkit-transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        perspective: 1000px;
     }
 }
 
