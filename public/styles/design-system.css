@@ -133,6 +133,25 @@ body {
 }
 
 /* =================================================================
+   UNIFIED TEXT SELECTION SYSTEM - "One Change Propagates Everywhere"
+   ================================================================= */
+
+/* Core text selection styling with brand colors and glowing effect */
+::selection {
+    background: var(--gradient-brand);
+    color: white;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 16px rgba(255, 255, 255, 0.6), 0 0 24px rgba(255, 255, 255, 0.4);
+    -webkit-text-fill-color: white;
+    -webkit-background-clip: text;
+}
+
+::-moz-selection {
+    background: var(--gradient-brand);
+    color: white;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 16px rgba(255, 255, 255, 0.6), 0 0 24px rgba(255, 255, 255, 0.4);
+}
+
+/* =================================================================
    ANIMATED GRADIENT BACKGROUND SYSTEM
    ================================================================= */
 
