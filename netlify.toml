@@ -6,8 +6,14 @@
   NODE_VERSION = "18"
 
 [[redirects]]
-  from = "/"
-  to = "/opportunities/"
+  from = "/opportunities"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/opportunities/"
+  to = "/"
   status = 301
   force = true
 

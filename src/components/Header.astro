@@ -9,7 +9,7 @@ const { currentPage } = Astro.props;
 <!-- Header -->
 <header class="header">
     <div class="header-left">
-        <a href="/opportunities" class="logo-link nav-link">
+        <a href="/" class="logo-link nav-link">
             <div class="logo">
                 <img src="/assets/logo.png" alt="luxsearch® logo">
             </div>
@@ -20,7 +20,7 @@ const { currentPage } = Astro.props;
         </a>
     </div>
     <nav class="nav">
-        <a href="/opportunities" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
+        <a href="/" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
         <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
     </nav>
 </header> 
