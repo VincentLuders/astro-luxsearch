@@ -19,63 +19,182 @@ const { currentPage } = Astro.props;
             </div>
         </a>
     </div>
+    
+    <!-- Desktop Navigation -->
     <nav class="nav">
         <a href="/" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
         <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
     </nav>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-menu">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-close" style="display: none;">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
+    
+    <!-- Mobile Hamburger Menu -->
+    <button class="hamburger-menu" id="hamburgerMenu" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
     </button>
-</header> 
+</header>
 
-<div class="mobile-nav-menu" id="mobile-nav-menu">
-    <div class="mobile-nav-panel">
-        <a href="/" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
-        <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mobile-menu-panel" id="mobileMenuPanel">
+        <div class="mobile-menu-item">
+            <a href="/" class="mobile-menu-link" data-page="opportunities">Opportunities</a>
+        </div>
+        
+        <div class="mobile-menu-item">
+            <a href="/hire-talent" class="mobile-menu-link" data-page="hire-talent">Hire Talent</a>
+            <div class="mobile-submenu">
+                <div class="mobile-submenu-item">
+                    <a href="/hire-talent#first-collaboration" class="mobile-submenu-link" data-scroll-to="first-collaboration">First collaboration</a>
+                </div>
+                <div class="mobile-submenu-item">
+                    <a href="/hire-talent#future-collaboration" class="mobile-submenu-link" data-scroll-to="future-collaboration">If you ever hire again</a>
+                </div>
+                <div class="mobile-submenu-item">
+                    <a href="/hire-talent#about-us" class="mobile-submenu-link" data-scroll-to="about-us">About Us</a>
+                </div>
+                <div class="mobile-submenu-item">
+                    <a href="/hire-talent#conditions" class="mobile-submenu-link" data-scroll-to="conditions">Conditions</a>
+                </div>
+                <div class="mobile-submenu-item">
+                    <a href="/hire-talent#schedule-meeting" class="mobile-submenu-link" data-scroll-to="schedule-meeting">Schedule your meeting</a>
+                </div>
+                <div class="mobile-submenu-item">
+                    <a href="/hire-talent#request-callback" class="mobile-submenu-link" data-scroll-to="request-callback">Request a Callback</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const navToggle = document.getElementById('nav-toggle');
-        const mobileNav = document.getElementById('mobile-nav-menu');
-        const iconMenu = navToggle.querySelector('.icon-menu');
-        const iconClose = navToggle.querySelector('.icon-close');
-
-        if (navToggle && mobileNav) {
-            navToggle.addEventListener('click', () => {
-                mobileNav.classList.toggle('is-open');
-                navToggle.classList.toggle('is-active');
-
-                if (mobileNav.classList.contains('is-open')) {
-                    iconMenu.style.display = 'none';
-                    iconClose.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    iconMenu.style.display = 'block';
-                    iconClose.style.display = 'none';
-                    document.body.style.overflow = '';
-                }
-            });
-
-            // Close menu when clicking outside
-            mobileNav.addEventListener('click', (e) => {
-                if (e.target === mobileNav) {
-                    mobileNav.classList.remove('is-open');
-                    navToggle.classList.remove('is-active');
-                    iconMenu.style.display = 'block';
-                    iconClose.style.display = 'none';
-                    document.body.style.overflow = '';
-                }
-            });
+// Mobile navigation functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+    
+    if (!hamburgerMenu || !mobileMenuOverlay || !mobileMenuPanel) return;
+    
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+        const isActive = hamburgerMenu.classList.contains('active');
+        
+        if (isActive) {
+            // Close menu
+            hamburgerMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            mobileMenuPanel.classList.remove('active');
+            document.body.style.overflow = '';
+        } else {
+            // Open menu
+            hamburgerMenu.classList.add('active');
+            mobileMenuOverlay.classList.add('active');
+            mobileMenuPanel.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    
+    // Close mobile menu
+    function closeMobileMenu() {
+        hamburgerMenu.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        mobileMenuPanel.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    // Event listeners
+    hamburgerMenu.addEventListener('click', toggleMobileMenu);
+    
+    // Close menu when clicking overlay
+    mobileMenuOverlay.addEventListener('click', function(e) {
+        if (e.target === mobileMenuOverlay) {
+            closeMobileMenu();
         }
     });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && hamburgerMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Handle mobile menu navigation
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link, .mobile-submenu-link');
+    
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const scrollTo = this.getAttribute('data-scroll-to');
+            
+            if (scrollTo) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                const basePage = href.split('#')[0];
+                
+                // Close mobile menu first
+                closeMobileMenu();
+                
+                // Navigate to page and scroll to section
+                if (window.location.pathname === basePage || (basePage === '/hire-talent' && window.location.pathname === '/hire-talent')) {
+                    // Same page, just scroll
+                    setTimeout(() => {
+                        scrollToSection(scrollTo);
+                    }, 300);
+                } else {
+                    // Different page, navigate then scroll
+                    window.location.href = href;
+                }
+            } else {
+                // Regular navigation
+                closeMobileMenu();
+                // Let the normal navigation handle the page change
+            }
+        });
+    });
+    
+    // Scroll to section function
+    function scrollToSection(sectionId) {
+        // Find the card with the matching title
+        const cards = document.querySelectorAll('.card-tall');
+        let targetCard = null;
+        
+        const sectionTitles = {
+            'first-collaboration': 'First collaboration:',
+            'future-collaboration': 'If you ever hire again:',
+            'about-us': 'About Us:',
+            'conditions': 'Conditions:',
+            'schedule-meeting': 'Schedule your meeting:',
+            'request-callback': 'Request a Callback'
+        };
+        
+        const targetTitle = sectionTitles[sectionId];
+        
+        cards.forEach(card => {
+            const titleElement = card.querySelector('.title');
+            if (titleElement && titleElement.textContent.trim() === targetTitle) {
+                targetCard = card;
+            }
+        });
+        
+        if (targetCard) {
+            const offset = 100; // Account for fixed header
+            const targetPosition = targetCard.offsetTop - offset;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+    
+    // Check if we need to scroll to a section on page load
+    const hash = window.location.hash;
+    if (hash) {
+        const sectionId = hash.substring(1);
+        setTimeout(() => {
+            scrollToSection(sectionId);
+        }, 500);
+    }
+});
 </script> 
