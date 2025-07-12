@@ -1,13 +1,14 @@
 ---
 export interface Props {
     currentPage?: 'opportunities' | 'hire-talent';
+    id?: string;
 }
 
-const { currentPage } = Astro.props;
+const { currentPage, id } = Astro.props;
 ---
 
 <!-- Header -->
-<header class="header">
+<header class="header" {...(id && { id })}>
     <div class="header-left">
         <a href="/" class="logo-link nav-link">
             <div class="logo">
@@ -19,8 +20,198 @@ const { currentPage } = Astro.props;
             </div>
         </a>
     </div>
-    <nav class="nav">
+    
+    <!-- Desktop Navigation -->
+    <nav class="nav desktop-nav">
         <a href="/" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
         <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
     </nav>
-</header> 
+    
+    <!-- Mobile Navigation Toggle -->
+    <button class="mobile-nav-toggle mobile-only" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<nav class="mobile-nav mobile-only">
+    <div class="mobile-nav-content">
+        <a href="/" class={`mobile-nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>
+            <span class="mobile-nav-icon">🎯</span>
+            <span class="mobile-nav-text">Opportunities</span>
+            <span class="mobile-nav-arrow">→</span>
+        </a>
+        <a href="/hire-talent" class={`mobile-nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>
+            <span class="mobile-nav-icon">🤝</span>
+            <span class="mobile-nav-text">Hire Talent</span>
+            <span class="mobile-nav-arrow">→</span>
+        </a>
+    </div>
+</nav>
+
+<!-- Mobile Navigation Overlay -->
+<div class="mobile-nav-overlay mobile-only"></div>
+
+<script>
+// Mobile Navigation Enhancement
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    if (!mobileNavToggle || !mobileNav || !mobileNavOverlay) return;
+    
+    let isNavOpen = false;
+    
+    // Toggle mobile navigation
+    function toggleMobileNav() {
+        isNavOpen = !isNavOpen;
+        
+        // Update toggle button state
+        mobileNavToggle.setAttribute('aria-expanded', isNavOpen.toString());
+        mobileNavToggle.classList.toggle('active', isNavOpen);
+        
+        // Update navigation state
+        mobileNav.classList.toggle('active', isNavOpen);
+        mobileNavOverlay.classList.toggle('active', isNavOpen);
+        
+        // Update body scroll behavior
+        document.body.classList.toggle('mobile-nav-open', isNavOpen);
+        
+        // Add smooth animations
+        if (isNavOpen) {
+            mobileNav.style.transform = 'translateX(0)';
+            mobileNavOverlay.style.opacity = '1';
+            mobileNavOverlay.style.visibility = 'visible';
+            
+            // Animate navigation links with stagger effect
+            mobileNavLinks.forEach((link, index) => {
+                link.style.transitionDelay = `${index * 0.1}s`;
+                link.style.transform = 'translateX(0)';
+                link.style.opacity = '1';
+            });
+        } else {
+            mobileNav.style.transform = 'translateX(100%)';
+            mobileNavOverlay.style.opacity = '0';
+            mobileNavOverlay.style.visibility = 'hidden';
+            
+            // Reset link animations
+            mobileNavLinks.forEach(link => {
+                link.style.transitionDelay = '0s';
+                link.style.transform = 'translateX(20px)';
+                link.style.opacity = '0';
+            });
+        }
+    }
+    
+    // Close mobile navigation
+    function closeMobileNav() {
+        if (isNavOpen) {
+            toggleMobileNav();
+        }
+    }
+    
+    // Event listeners
+    mobileNavToggle.addEventListener('click', toggleMobileNav);
+    mobileNavOverlay.addEventListener('click', closeMobileNav);
+    
+    // Close when clicking navigation links
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', closeMobileNav);
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isNavOpen) {
+            closeMobileNav();
+        }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && isNavOpen) {
+            closeMobileNav();
+        }
+    });
+    
+    // Touch gesture support for mobile navigation
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let isDragging = false;
+    
+    // Touch start
+    mobileNav.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = false;
+    });
+    
+    // Touch move
+    mobileNav.addEventListener('touchmove', (e) => {
+        if (!isNavOpen) return;
+        
+        currentX = e.touches[0].clientX;
+        currentY = e.touches[0].clientY;
+        
+        const deltaX = currentX - startX;
+        const deltaY = Math.abs(currentY - startY);
+        
+        // Only handle horizontal swipes
+        if (deltaY < 50 && deltaX > 0) {
+            isDragging = true;
+            e.preventDefault();
+            
+            // Apply transform based on drag distance
+            const dragDistance = Math.min(deltaX, mobileNav.offsetWidth);
+            mobileNav.style.transform = `translateX(${dragDistance}px)`;
+            
+            // Adjust overlay opacity
+            const progress = dragDistance / mobileNav.offsetWidth;
+            mobileNavOverlay.style.opacity = 1 - progress;
+        }
+    });
+    
+    // Touch end
+    mobileNav.addEventListener('touchend', (e) => {
+        if (!isDragging || !isNavOpen) return;
+        
+        const deltaX = currentX - startX;
+        const threshold = mobileNav.offsetWidth * 0.3;
+        
+        if (deltaX > threshold) {
+            // Close navigation
+            closeMobileNav();
+        } else {
+            // Snap back to open position
+            mobileNav.style.transform = 'translateX(0)';
+            mobileNavOverlay.style.opacity = '1';
+        }
+        
+        isDragging = false;
+    });
+    
+    // Initialize mobile navigation links animation state
+    mobileNavLinks.forEach(link => {
+        link.style.transform = 'translateX(20px)';
+        link.style.opacity = '0';
+    });
+    
+    // Add haptic feedback simulation for touch devices
+    function simulateHapticFeedback() {
+        if (navigator.vibrate) {
+            navigator.vibrate(10);
+        }
+    }
+    
+    // Add haptic feedback to interactions
+    mobileNavToggle.addEventListener('click', simulateHapticFeedback);
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', simulateHapticFeedback);
+    });
+});
+</script> 
