@@ -1,22 +1,18 @@
 ---
-// Redirect homepage to opportunities page
-if (typeof window !== 'undefined') {
-  window.location.replace('/opportunities/');
-}
+// Clean SEO-optimized homepage - Server handles redirect via netlify.toml
+import Layout from '../components/Layout.astro';
 ---
 
-<script>
-// Immediate redirect on page load
-window.location.replace('/opportunities/');
-</script>
-
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=/opportunities/">
-  <title>luxsearch® - Premium IT Recruitment</title>
-</head>
-<body>
-  <p>Redirecting to opportunities...</p>
-</body>
-</html> 
+<Layout title="luxsearch® - Premium IT Recruitment" currentPage="opportunities">
+    <div class="container">
+        <div class="card card-tall">
+            <h3 class="title">Premium IT Recruitment</h3>
+            <div class="body-text">
+                Connecting exceptional talent with innovative companies across Europe.
+            </div>
+            <div class="body-text">
+                Discover your next opportunity or find the perfect candidate for your team.
+            </div>
+        </div>
+    </div>
+</Layout> 
