@@ -6,7 +6,7 @@ export interface Props {
 const { currentPage } = Astro.props;
 ---
 
-<!-- Enhanced Header with Mobile Menu -->
+<!-- Header -->
 <header class="header">
     <div class="header-left">
         <a href="/" class="logo-link nav-link">
@@ -19,87 +19,63 @@ const { currentPage } = Astro.props;
             </div>
         </a>
     </div>
-    
-    <!-- Desktop Navigation -->
     <nav class="nav">
         <a href="/" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
         <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
     </nav>
-    
-    <!-- Mobile Menu Toggle -->
-    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu">
-        <span></span>
-        <span></span>
-        <span></span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-menu">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-close" style="display: none;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
     </button>
-</header>
+</header> 
 
-<!-- Mobile Menu Overlay -->
-<div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+<div class="mobile-nav-menu" id="mobile-nav-menu">
+    <div class="mobile-nav-panel">
+        <a href="/" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
+        <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
+    </div>
+</div>
 
-<!-- Mobile Menu -->
-<nav class="mobile-menu" id="mobile-menu">
-    <a href="/" class={`nav-link ${currentPage === 'opportunities' ? 'current' : ''}`}>Opportunities</a>
-    <a href="/hire-talent" class={`nav-link ${currentPage === 'hire-talent' ? 'current' : ''}`}>Hire Talent</a>
-</nav>
-
-<!-- Mobile Menu JavaScript -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const body = document.body;
+    document.addEventListener('DOMContentLoaded', () => {
+        const navToggle = document.getElementById('nav-toggle');
+        const mobileNav = document.getElementById('mobile-nav-menu');
+        const iconMenu = navToggle.querySelector('.icon-menu');
+        const iconClose = navToggle.querySelector('.icon-close');
 
-        function toggleMobileMenu() {
-            const isActive = mobileMenuToggle.classList.contains('active');
-            
-            if (isActive) {
-                // Close menu
-                mobileMenuToggle.classList.remove('active');
-                mobileMenuOverlay.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                body.style.overflow = '';
-            } else {
-                // Open menu
-                mobileMenuToggle.classList.add('active');
-                mobileMenuOverlay.classList.add('active');
-                mobileMenu.classList.add('active');
-                body.style.overflow = 'hidden';
-            }
+        if (navToggle && mobileNav) {
+            navToggle.addEventListener('click', () => {
+                mobileNav.classList.toggle('is-open');
+                navToggle.classList.toggle('is-active');
+
+                if (mobileNav.classList.contains('is-open')) {
+                    iconMenu.style.display = 'none';
+                    iconClose.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    iconMenu.style.display = 'block';
+                    iconClose.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Close menu when clicking outside
+            mobileNav.addEventListener('click', (e) => {
+                if (e.target === mobileNav) {
+                    mobileNav.classList.remove('is-open');
+                    navToggle.classList.remove('is-active');
+                    iconMenu.style.display = 'block';
+                    iconClose.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
         }
-
-        function closeMobileMenu() {
-            mobileMenuToggle.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            body.style.overflow = '';
-        }
-
-        // Toggle menu on button click
-        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
-
-        // Close menu when clicking overlay
-        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-
-        // Close menu when clicking nav links
-        const navLinks = mobileMenu.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
-
-        // Close menu on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                closeMobileMenu();
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
-                closeMobileMenu();
-            }
-        });
     });
 </script> 
